@@ -210,3 +210,55 @@ button {
 .basic-info button {
     margin-top: 65px;
 }
+.pagina2 {
+  width: 100%;
+  height: auto;
+}
+.bannerquiz{
+  width: 100%;
+  height: 227px;
+  background-color: yellow;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 60%;
+  margin-bottom: 42px;
+}
+.tituloQuiz{
+opacity: 100%;
+}
+.Perguntaquiz{
+  width: 688.16px;
+  height: 612.43px;
+  margin: auto;
+  margin-bottom: 42px;
+}
+.textoPergunta{
+  width: 100%;
+  height: 138px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: blue;
+}
+  .caixa1imagens{
+  width: 686.14px;
+  height: 217.06px;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20.16px;
+}
+.img1{
+  width: 329.91px;
+  height: 175.2px;
+}
+.img2{
+  width: 329.91px;
+  height: 175.2px;
+}
+.caixa2imagens{
+  width: 686.14px;
+  height: 217.06px;
+  display: flex;
+  justify-content: space-between;
+}
