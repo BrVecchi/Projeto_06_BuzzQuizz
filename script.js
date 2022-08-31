@@ -28,7 +28,7 @@ function mostrarQuizzes(resposta) {
         <p class="texto-quizz">${dados[i].title}</p>
     </li>`;
     quizzes.innerHTML = quizzes.innerHTML + quizz;
-    document.querySelector(`#quizz${i}`).style.background = `linear-gradient(
+    document.querySelector(`#quizz${i}`).style.backgroundImage = `linear-gradient(
         180deg,
         rgba(255, 255, 255, 0) 0%,
         rgba(0, 0, 0, 0.5) 64.58%,
