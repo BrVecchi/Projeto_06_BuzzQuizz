@@ -23,6 +23,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 100;
 }
 
 .texto-cabecalho {
@@ -39,6 +40,7 @@ body {
   justify-content: center;
   align-items: center;
   margin-top: 69px;
+  position: relative;
 }
 /* --------------------INÍCIO PAGINA 1--------------------*/
 .pagina1 {
@@ -134,7 +136,7 @@ body {
 
 
 /*-------------------INÍCIO PÁGINA 3------------------*/
-.T3-criar-quiz {
+.criar-quiz {
     margin-top: 69px;
 }
 
@@ -144,6 +146,8 @@ body {
     flex-direction: column;
     align-items: center;
     position: absolute;
+    top: 0;
+    left: 0;
     z-index: 2;
 }
 
