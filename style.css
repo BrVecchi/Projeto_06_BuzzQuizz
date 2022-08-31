@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+
+
+.hidden {
+    display:none;
+}
+
+.T3-criar-quiz {
+    margin-top: 69px;
+}
+
+.basic-info {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    z-index: 2;
+}
+
+.basic-info h1 {
+    margin-top: 71px;
+    margin-bottom: 27px;
+}
+
+fieldset {
+    width: 600px;
+    height: 259px;
+    display: flex;
+    flex-direction: column; 
+    align-items: center;
+    gap: 9px;
+    padding: 24px 16px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
+}
+
+.bold {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+input {
+    width: 100%;
+    height: 46px;
+    background: #FFFFFF;
+    border: 1px solid #D1D1D1;
+    border-radius: 5px;
+    padding-left: 23px;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-size: 19px;
+}
+
+input::placeholder {
+    font-family: 'Roboto';
+    font-style: italic;
+    font-weight: 400;
+    font-size: 19px;
+    color: #BABABA;
+}
+
+button {
+    width: 355px;
+    height: 54px;
+    background-color: #EC362D;
+    border-radius: 15px;
+    color: #FFF5F4;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 21px;
+    border: none;
+}
+
+.basic-info button {
+    margin-top: 65px;
+}
