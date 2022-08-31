@@ -245,6 +245,7 @@ opacity: 100%;
   width: 686.14px;
   height: 217.06px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   margin-top: 20.16px;
 }
@@ -256,9 +257,18 @@ opacity: 100%;
   width: 329.91px;
   height: 175.2px;
 }
-.caixa2imagens{
-  width: 686.14px;
-  height: 217.06px;
-  display: flex;
-  justify-content: space-between;
+.img3{
+  width: 329.91px;
+  height: 175.2px;
+}
+.img4{
+  width: 329.91px;
+  height: 175.2px;
+}
+.selecionado {
+  color: #009C22;
+}
+.naoSelecionado {
+  color: #FF4B4B;
+  opacity: 40%;
 }
