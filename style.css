@@ -218,7 +218,6 @@ button {
 .bannerquiz{
   width: 100%;
   height: 227px;
-  background-color: yellow;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -233,6 +232,9 @@ opacity: 100%;
   height: 612.43px;
   margin: auto;
   margin-bottom: 42px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 .textoPergunta{
   width: 100%;
@@ -242,14 +244,7 @@ opacity: 100%;
   align-items: center;
   background-color: blue;
 }
-  .caixa1imagens{
-  width: 686.14px;
-  height: 217.06px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 20.16px;
-}
+ 
 .img1{
   width: 329.91px;
   height: 175.2px;
