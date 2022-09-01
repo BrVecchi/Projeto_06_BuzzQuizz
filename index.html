@@ -36,19 +36,85 @@
         <div class="pagina2">
     </div> 
         <div class="pagina3 criar-quiz hidden">
+        <div class="pagina2 hidden">
+            <div class="bannerquiz">
+                <div class="tituloQuiz"><h1>O quão Potterhead é você?</h1></div>
+            </div>
+            <div class="Perguntaquiz">
+                <div class="textoPergunta"><h1>Em qual animal Olho-Tonto Moody transfigurou Malfoy?</h1></div>
+                <div class="caixa1imagens">
+                    <div class="caixa1">
+                    <img class="img1" src="./imgs_pg1/Os-Simpsons.jpg" />
+                    <div class="titulocaixa"><h1>Sapo gordo</h1></div>
+                </div>
+                <div class="caixa2">
+                    <img class="img2" src="./imgs_pg1/Os-Simpsons.jpg"/>
+                    <div class="titulocaixa"><h1>Sapo gordo</h1></div>
+                </div>
+                </div>
+
+                <div class="caixa2imagens">
+                    <div class="caixa1imagens">
+                        <div class="caixa1">
+                        <img class="img1" src="./imgs_pg1/Os-Simpsons.jpg" />
+                        <div class="titulocaixa"><h1>Sapo gordo</h1></div>
+                    </div>
+                    <div class="caixa2">
+                        <img class="img2" src="./imgs_pg1/Os-Simpsons.jpg"/>
+                        <div class="titulocaixa"><h1>Sapo gordo</h1></div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        </div>
+        <div class="pagina3 criar-quiz">
             <div class="basic-info-container">
                 <div class="basic-info">
-                    <h1 class="bold">Comece pelo começo</h1>
+                    <h1>Comece pelo começo</h1>
                     <fieldset>
-                        <input class="titulo" type="text" placeholder="Título do seu quizz">
-                        <input class="img-url" type="text" placeholder="URL da imagem do seu quizz">
-                        <input class="qntd-perguntas" type="text" placeholder="Quantidade de perguntas do quizz">
-                        <input class="qntd-niveis" type="text" placeholder="Quantidade de níveis do quizz">
+                        <input class="titulo" type="text" placeholder="Título do seu quizz (Entre 20 e 65 caracteres)">
+                        <input class="img-url" type="url" placeholder="URL da imagem do seu quizz">
+                        <input class="qntd-perguntas" type="text" placeholder="Quantidade de perguntas do quizz (mínimo: 3)">
+                        <input class="qntd-niveis" type="text" placeholder="Quantidade de níveis do quizz (mínimo: 2)">
                     </fieldset>
                     <button onclick="addInfo()">Prosseguir para perguntas</button>
                 </div>
             </div>
-            <div class="criar-perguntas"></div>
+            <div class="criar-perguntas-container hidden">
+                <div class="criar-perguntas">
+                    <h1>Crie suas perguntas</h1>
+                    <!-- <fieldset>
+                        <div class="campo-pergunta">
+                            <h2>Pergunta 1</h2>
+                            <input type="text" placeholder="Texto da pergunta (mínimo: 20 caracteres)">
+                            <input type="text" placeholder="Cor de fundo da pergunta (formato: #123456)">
+                        </div>
+                        <div class="campo-correta">
+                            <h2>Resposta correta</h2>
+                            <input type="text" placeholder="Resposta correta">
+                            <input type="text" placeholder="URL da imagem">
+                        </div>
+                        <div class="campo-incorretas">
+                            <h2>Respostas incorretas</h2>
+                            <div class="incorretas">
+                            <div class="incorreta1">
+                                <input type="text" placeholder="Resposta incorreta 1">
+                                <input type="text" placeholder="URL da imagem 1">
+                            </div>
+                            <div class="incorreta2">
+                                <input type="text" placeholder="Resposta incorreta 2">
+                                <input type="text" placeholder="URL da imagem 2">
+                            </div>
+                            <div class="incorreta3">
+                                <input type="text" placeholder="Resposta incorreta 3">
+                                <input type="text" placeholder="URL da imagem 3">
+                            </div>
+                            </div>
+                        </div>
+                    </fieldset> -->
+                </div>
+            </div>
         </div>
     </div>
 
