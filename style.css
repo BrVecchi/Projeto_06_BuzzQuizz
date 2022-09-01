@@ -272,6 +272,11 @@ button {
     font-weight: 400;
     font-size: 21px;
     border: none;
+    margin-bottom: 50px;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 .basic-info button {
