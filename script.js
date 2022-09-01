@@ -16,7 +16,8 @@ function addInfo() {
 const promessa = axios.get(
   "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes"
 );
-promessa.then(mostrarQuizzes).then(selecionarQuiz);
+promessa.then(mostrarQuizzes)
+promessa.then(renderizarQuizz);
 
 function mostrarQuizzes(resposta) {
   const dados = resposta.data;
@@ -38,8 +39,16 @@ function mostrarQuizzes(resposta) {
   }
 }
 
-function selecionarQuiz(botao){
-    console.log(botao.data);
+function renderizarQuizz(quizzesLoucos){
+    const arrayQuizzes = quizzesLoucos.data;
+    const quizz = arrayQuizzes[0];
+    console.log(quizz)
+    const titulo = quizz.title;
+    const pergunta1 = quizz.questions[0].title
+    console.log(pergunta1)
+
+    // criar um for para pegar todas as perguntas
+    // e dentro dele criar um for para pegar todas as respostas referentes a essa pergunta
     
     const botaoNaoClicado = document.querySelectorAll('.selecionado');
     console.log(botaoNaoClicado)
