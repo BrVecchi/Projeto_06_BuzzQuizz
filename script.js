@@ -2,6 +2,17 @@ let titulo = "";
 let imgURL = "";
 let qntdPerguntas = "";
 let qntdNiveis = "";
+let tituloPergunta = "";
+let cor = "";
+let resposta1 = "";
+let img1 = "";
+let resposta2 = "";
+let img2 = "";
+let resposta3 = "";
+let img3 = "";
+let resposta4 = "";
+let img4 = "";
+let obj = "";
 let perguntas = [];
 
 
@@ -29,13 +40,93 @@ function addInfo() {
 function renderizarCriarPerguntas() {
   let criarPerguntas = document.querySelector(".criar-perguntas");
   for(let i = 1; i <= qntdPerguntas; i++) {
-    criarPerguntas.innerHTML += `<fieldset><div class="campo-pergunta"><h2>Pergunta ${i}</h2><input class="tituloPergunta${i}" type="text" placeholder="Texto da pergunta (mínimo: 20 caracteres)"><input class="cor${i}" type="text" placeholder="Cor de fundo da pergunta (formato: #123456)"></div><div class="campo-correta"><h2>Resposta correta</h2><input class="correta${i}" type="text" placeholder="Resposta correta"><input type="text" placeholder="URL da imagem"></div><div class="campo-incorretas"><h2>Respostas incorretas</h2><div class="incorretas"><div class="incorreta1 incorreta1-pergunta${i}"><input type="text" placeholder="Resposta incorreta 1"><input type="text" placeholder="URL da imagem 1"></div><div class="incorreta2 incorreta2-pergunta${i}"><input type="text" placeholder="Resposta incorreta 2"><input type="text" placeholder="URL da imagem 2"></div><div class="incorreta3 incorreta3-pergunta${i}"><input type="text" placeholder="Resposta incorreta 3"><input type="text" placeholder="URL da imagem 3"></div></div></div></fieldset>`
+    criarPerguntas.innerHTML += `<fieldset><div class="campo-pergunta"><h2>Pergunta ${i}</h2><input class="tituloPergunta${i}" type="text" placeholder="Texto da pergunta (mínimo: 20 caracteres)"><input class="cor${i}" type="text" placeholder="Cor de fundo da pergunta (formato: #123456)"></div><div class="campo-correta"><h2>Resposta correta</h2><input class="correta${i}" type="text" placeholder="Resposta correta"><input class = "resposta${i}-img1" type="text" placeholder="URL da imagem"></div><div class="campo-incorretas"><h2>Respostas incorretas</h2><div class="incorretas"><div class="incorreta1"><input class="incorreta1-pergunta${i}" type="text" placeholder="Resposta incorreta 1"><input class = "resposta${i}-img2" type="text" placeholder="URL da imagem 1"></div><div class="incorreta2"><input class="incorreta2-pergunta${i}" type="text" placeholder="Resposta incorreta 2"><input class = "resposta${i}-img3" type="text" placeholder="URL da imagem 2"></div><div class="incorreta3"><input class="incorreta3-pergunta${i}" type="text" placeholder="Resposta incorreta 3"><input class = "resposta${i}-img4" type="text" placeholder="URL da imagem 3"></div></div></div></fieldset>`
   }
   criarPerguntas.innerHTML += '<button onclick="guardarPerguntas()">Prosseguir para criar níveis</button>'
 }
 
 function guardarPerguntas() {
-  
+  for(i = 1; i <= qntdPerguntas; i++) {
+    tituloPergunta = document.querySelector(`.tituloPergunta${i}`).value;
+    cor = document.querySelector(`.cor${i}`).value;
+    resposta1 = document.querySelector(`.correta${i}`).value;
+    img1 = document.querySelector(`.resposta${i}-img1`).value;
+    resposta2 = document.querySelector(`.incorreta1-pergunta${i}`).value;
+    img2 = document.querySelector(`.resposta${i}-img2`).value;
+    resposta3 = document.querySelector(`.incorreta2-pergunta${i}`).value;
+    img3 = document.querySelector(`.resposta${i}-img3`).value;
+    resposta4 = document.querySelector(`.incorreta3-pergunta${i}`).value;
+    img4 = document.querySelector(`.resposta${i}-img4`).value;
+    if(resposta3 === "" && resposta4 === "") {
+      obj = {
+        title: `${tituloPergunta}`,
+        color: `${cor}`,
+        answers: [
+          {
+            text: `${resposta1}`,
+            image: `${img1}`,
+            isCorrectAnswer: true
+          },
+          {
+            text: `${resposta2}`,
+            image: `${img2}`,
+            isCorrectAnswer: false
+          }
+        ]
+      }
+    } else if(resposta4 === "") {
+      obj = {
+        title: `${tituloPergunta}`,
+        color: `${cor}`,
+        answers: [
+          {
+            text: `${resposta1}`,
+            image: `${img1}`,
+            isCorrectAnswer: true
+          },
+          {
+            text: `${resposta2}`,
+            image: `${img2}`,
+            isCorrectAnswer: false
+          },
+          {
+            text: `${resposta3}`,
+            image: `${img3}`,
+            isCorrectAnswer: false
+          }
+        ]
+      }
+    } else {
+    obj = {
+			title: `${tituloPergunta}`,
+			color: `${cor}`,
+			answers: [
+				{
+					text: `${resposta1}`,
+					image: `${img1}`,
+					isCorrectAnswer: true
+				},
+				{
+					text: `${resposta2}`,
+					image: `${img2}`,
+					isCorrectAnswer: false
+				},
+				{
+					text: `${resposta3}`,
+					image: `${img3}`,
+					isCorrectAnswer: false
+				},
+				{
+					text: `${resposta4}`,
+					image: `${img4}`,
+					isCorrectAnswer: false
+				}
+			]
+		}
+  }
+    perguntas.push(obj);
+  }
+  // console.log(perguntas);
 }
 
 const promessa = axios.get(
