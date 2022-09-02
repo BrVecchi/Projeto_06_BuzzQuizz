@@ -45,6 +45,10 @@ function mostrarQuizzes(resposta) {
   dadosRecebidos = dados;
   quizzes.innerHTML = "";
   quizzes_pessoal.innerHTML = "";
+  if (id_quizzes_usuario[0] !== undefined) {
+    document.querySelector(".quizzes-pessoal-vazio").classList.add("hidden");
+    document.querySelector(".quizzes-pessoal-container").classList.remove("hidden");
+  }
   for (let i = 0; i < dados.length; i++) {
       if (id_quizzes_usuario[0] !== undefined) {
       for (let j = 0; j < id_quizzes_usuario.length; j++) {
