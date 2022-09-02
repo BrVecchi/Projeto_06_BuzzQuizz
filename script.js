@@ -339,8 +339,6 @@ function renderizarQuizz(quizz) {
   const quizes = arrayQuizzes[0];
   console.log(arrayQuizzes);
 
-
-
     const mudarCor = quizes.questions;
   let body = `
   <div class = topPerguntaQuiz> 
@@ -358,6 +356,11 @@ function renderizarQuizz(quizz) {
             <div class="divSeguraAsPerguntas ${x}">
     `;
     
+    question.answers.sort(comparador); // Após esta linha, a minhaArray estará embaralhada
+    // Esta função pode ficar separada do código acima, onde você preferir
+    function comparador() { 
+      return Math.random() - 0.5; 
+    }
 
     for (const answer of question.answers) {
         body += `
@@ -373,12 +376,18 @@ function renderizarQuizz(quizz) {
  
   }   for(const levels of quizes.levels){
     console.log(levels);
-    body += `<div class="QuizFinalizado hidden">
-    <div class="porcentagemDeAcerto"><p class="tituloFinalQuiz">${levels.title}</p></div>
-    <div class="imagemEsubtitulo">
-    <img class="imagenFinalQuiz" src="${levels.image}"/>
-    <div class="SubtituloFinal">${levels.text}</div>
-      </div>`
+    body += `
+    <div id="${levels.minValue}" class="QuizFinalizado hidden">
+      <div class="porcentagemDeAcerto"><span class="textoFinal"></span><p class="tituloFinalQuiz"> ${levels.title}</p></div>
+      <div class="imagemEsubtitulo">
+        <img class="imagenFinalQuiz" src="${levels.image}"/>
+        <div class="SubtituloFinal">${levels.text}</div>
+      </div>
+      <div class="botaoReproduzirQuiz"
+    <button onclick="reproduzirQuiz()">Reiniciar Quizz</button>
+    </div>
+    </div>
+`
 }
     adicionarPerguntas.innerHTML = adicionarPerguntas.innerHTML + body;
     document.querySelector('.bannerquiz').style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url(${quizes.image})`;
@@ -416,12 +425,42 @@ function respostaSelecionada(respostaEscolhida){
     if(acertos+erros===x){
        setTimeout (finalizandoQuiz, 2000);
     } else {
-      setTimeout (() => { elementoQueQueroQueApareca.scrollIntoView(); }, 2000);
+      elementoQueQueroQueApareca && setTimeout (() => { elementoQueQueroQueApareca.scrollIntoView(); }, 2000);
     }
 }
-function finalizandoQuiz(){
 
-    const elementoQueQueroQueApareca = document.querySelector('.QuizFinalizado');
-    elementoQueQueroQueApareca.classList.remove('hidden');
-elementoQueQueroQueApareca.scrollIntoView();
+let tt;
+let tt2;
+
+function finalizandoQuiz(){
+  const elementos = document.getElementsByClassName('QuizFinalizado');
+  const elementosArray = Array.from(elementos);
+
+  elementosArray.sort(function(a, b) {
+    if (a.id > b.id) {
+      return 1;
+    }
+    if (a.id < b.id) {
+      return -1;
+    }
+    
+    return 0;
+  });
+
+  const porcentagem = acertos / x;
+  const arredondaPorcentagem = porcentagem.toFixed(2)*100
+
+  let elementoQueQueroQueApareca;
+  for (let elemento of elementosArray) {
+    if (arredondaPorcentagem < parseInt(elemento.id)) {
+      break;
+    }
+    elementoQueQueroQueApareca = elemento;
+  }
+    
+  elementoQueQueroQueApareca.classList.remove('hidden');
+  elementoQueQueroQueApareca.scrollIntoView();
+  
+  const textoFinal = elementoQueQueroQueApareca.getElementsByClassName('tituloFinalQuiz')[0];
+  textoFinal.innerHTML = `${arredondaPorcentagem}% de acerto: ${textoFinal.innerHTML}`;
 }
