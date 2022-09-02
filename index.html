@@ -66,7 +66,7 @@
         </div>
         </div>
         <div class="pagina3 criar-quiz">
-            <div class="basic-info-container">
+            <div class="basic-info-container hidden">
                 <div class="basic-info">
                     <h1>Comece pelo começo</h1>
                     <fieldset>
@@ -81,35 +81,55 @@
             <div class="criar-perguntas-container hidden">
                 <div class="criar-perguntas">
                     <h1>Crie suas perguntas</h1>
-                    <!-- <fieldset>
+                    <fieldset>
+                        <h2>Pergunta 1</h2>
+                        <div class="form-container">
+                        <div class="form">
                         <div class="campo-pergunta">
-                            <h2>Pergunta 1</h2>
-                            <input type="text" placeholder="Texto da pergunta (mínimo: 20 caracteres)">
-                            <input type="text" placeholder="Cor de fundo da pergunta (formato: #123456)">
+                            <input class="tituloPergunta1" type="text" placeholder="Texto da pergunta (mínimo: 20 caracteres)">
+                            <input class="cor1" type="text" placeholder="Cor de fundo da pergunta (formato: #123456)">
                         </div>
                         <div class="campo-correta">
                             <h2>Resposta correta</h2>
-                            <input type="text" placeholder="Resposta correta">
-                            <input type="text" placeholder="URL da imagem">
+                            <input class="correta1" type="text" placeholder="Resposta correta">
+                            <input class = "resposta1-img1" type="text" placeholder="URL da imagem">
                         </div>
                         <div class="campo-incorretas">
                             <h2>Respostas incorretas</h2>
                             <div class="incorretas">
                             <div class="incorreta1">
-                                <input type="text" placeholder="Resposta incorreta 1">
-                                <input type="text" placeholder="URL da imagem 1">
+                                <input class="incorreta1-pergunta1" type="text" placeholder="Resposta incorreta 1">
+                                <input class = "resposta1-img2" type="text" placeholder="URL da imagem 1">
                             </div>
                             <div class="incorreta2">
-                                <input type="text" placeholder="Resposta incorreta 2">
-                                <input type="text" placeholder="URL da imagem 2">
+                                <input class="incorreta2-pergunta1" type="text" placeholder="Resposta incorreta 2">
+                                <input class = "resposta1-img3" type="text" placeholder="URL da imagem 2">
                             </div>
                             <div class="incorreta3">
-                                <input type="text" placeholder="Resposta incorreta 3">
-                                <input type="text" placeholder="URL da imagem 3">
+                                <input class="incorreta3-pergunta1" type="text" placeholder="Resposta incorreta 3">
+                                <input class = "resposta1-img4" type="text" placeholder="URL da imagem 3">
                             </div>
                             </div>
                         </div>
-                    </fieldset> -->
+                    </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+            <div class="criar-niveis-container hidden">
+                <div class="criar-niveis">
+                    <h1>Agora, decida os níveis!</h1>
+                    <fieldset>
+                        <h2>Nível 1</h2>
+                        <div class="form-container">
+                        <div class="niveis-form">
+                            <input class="tituloNivel1" type="text" placeholder="Título do nível (mínimo: 10 caracteres)">
+                            <input class="porcentagem1" type="text" placeholder="% de acerto mínima">
+                            <input class="url1" type="text" placeholder="URL da imagem do nível">
+                            <textarea name="" class="nivel-descricao descricao1" placeholder="Descrição do nível"></textarea>
+                        </div>
+                        </div>
+                    </fieldset>
                 </div>
             </div>
         </div>

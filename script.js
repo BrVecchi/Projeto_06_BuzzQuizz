@@ -12,8 +12,14 @@ let resposta3 = "";
 let img3 = "";
 let resposta4 = "";
 let img4 = "";
-let obj = "";
+let objQuestions = "";
+let objLevels = "";
 let perguntas = [];
+let tituloNivel = "";
+let PorcentagemMinima = "";
+let imgURL_nivel = "";
+let descricaoNivel
+let niveis = [];
 
 
 const quizzes = document.querySelector(".quizzes");
@@ -39,13 +45,57 @@ function addInfo() {
 
 function renderizarCriarPerguntas() {
   let criarPerguntas = document.querySelector(".criar-perguntas");
-  for(let i = 1; i <= qntdPerguntas; i++) {
-    criarPerguntas.innerHTML += `<fieldset><div class="campo-pergunta"><h2>Pergunta ${i}</h2><input class="tituloPergunta${i}" type="text" placeholder="Texto da pergunta (mínimo: 20 caracteres)"><input class="cor${i}" type="text" placeholder="Cor de fundo da pergunta (formato: #123456)"></div><div class="campo-correta"><h2>Resposta correta</h2><input class="correta${i}" type="text" placeholder="Resposta correta"><input class = "resposta${i}-img1" type="text" placeholder="URL da imagem"></div><div class="campo-incorretas"><h2>Respostas incorretas</h2><div class="incorretas"><div class="incorreta1"><input class="incorreta1-pergunta${i}" type="text" placeholder="Resposta incorreta 1"><input class = "resposta${i}-img2" type="text" placeholder="URL da imagem 1"></div><div class="incorreta2"><input class="incorreta2-pergunta${i}" type="text" placeholder="Resposta incorreta 2"><input class = "resposta${i}-img3" type="text" placeholder="URL da imagem 2"></div><div class="incorreta3"><input class="incorreta3-pergunta${i}" type="text" placeholder="Resposta incorreta 3"><input class = "resposta${i}-img4" type="text" placeholder="URL da imagem 3"></div></div></div></fieldset>`
+  for(let i = 2; i <= qntdPerguntas; i++) {
+    criarPerguntas.innerHTML += `<fieldset>
+    <div class="pergunta-title">
+      <h2>Pergunta ${i}</h2>
+      <img class ="icon-edit" onclick = "mostrarCampos(this)" src="/imgs_pg1/Icone-editar.png" alt="icone">
+    </div>
+    <div class="form-container hidden">
+      <div class="form">
+        <div class="campo-pergunta">
+          <input class="tituloPergunta${i}" type="text" placeholder="Texto da pergunta (mínimo: 20 caracteres)">
+          <input class="cor${i}" type="text" placeholder="Cor de fundo da pergunta (formato: #123456)">
+        </div>
+        <div class="campo-correta">
+          <h2>Resposta correta</h2>
+          <input class="correta${i}" type="text" placeholder="Resposta correta">
+          <input class = "resposta${i}-img1" type="text" placeholder="URL da imagem">
+        </div>
+        <div class="campo-incorretas">
+          <h2>Respostas incorretas</h2>
+          <div class="incorretas">
+            <div class="incorreta1">
+              <input class="incorreta1-pergunta${i}" type="text" placeholder="Resposta incorreta 1">
+              <input class = "resposta${i}-img2" type="text" placeholder="URL da imagem 1">
+            </div>
+            <div class="incorreta2">
+              <input class="incorreta2-pergunta${i}" type="text" placeholder="Resposta incorreta 2">
+              <input class = "resposta${i}-img3" type="text" placeholder="URL da imagem 2">
+            </div>
+            <div class="incorreta3">
+              <input class="incorreta3-pergunta${i}" type="text" placeholder="Resposta incorreta 3">
+              <input class = "resposta${i}-img4" type="text" placeholder="URL da imagem 3">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </fieldset>`
   }
   criarPerguntas.innerHTML += '<button onclick="guardarPerguntas()">Prosseguir para criar níveis</button>'
 }
 
+function mostrarCampos(div) {
+  let pai = (div.parentNode).parentNode;
+  let divSelecionada = pai.querySelector(".form-container");
+  divSelecionada.classList.toggle("hidden");
+}
+
 function guardarPerguntas() {
+  let criarPerguntas = document.querySelector(".criar-perguntas-container");
+  let criarNiveis = document.querySelector(".criar-niveis-container")
+  let verificador = 0;
   for(i = 1; i <= qntdPerguntas; i++) {
     tituloPergunta = document.querySelector(`.tituloPergunta${i}`).value;
     cor = document.querySelector(`.cor${i}`).value;
@@ -57,8 +107,12 @@ function guardarPerguntas() {
     img3 = document.querySelector(`.resposta${i}-img3`).value;
     resposta4 = document.querySelector(`.incorreta3-pergunta${i}`).value;
     img4 = document.querySelector(`.resposta${i}-img4`).value;
+    const reg = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+    if(tituloPergunta < 20 || resposta1 === "" || resposta2 === "" || reg.test(img1) === false || reg.test(img2) === false || (reg.test(img3) === false && img3 !== "") || (reg.test(img4) === false && img4 !== "")){
+      verificador++;
+    } else {
     if(resposta3 === "" && resposta4 === "") {
-      obj = {
+      objQuestions = {
         title: `${tituloPergunta}`,
         color: `${cor}`,
         answers: [
@@ -75,7 +129,7 @@ function guardarPerguntas() {
         ]
       }
     } else if(resposta4 === "") {
-      obj = {
+      objQuestions = {
         title: `${tituloPergunta}`,
         color: `${cor}`,
         answers: [
@@ -97,7 +151,7 @@ function guardarPerguntas() {
         ]
       }
     } else {
-    obj = {
+    objQuestions = {
 			title: `${tituloPergunta}`,
 			color: `${cor}`,
 			answers: [
@@ -124,10 +178,82 @@ function guardarPerguntas() {
 			]
 		}
   }
-    perguntas.push(obj);
+} 
+    perguntas.push(objQuestions);
   }
-  // console.log(perguntas);
+  if(verificador !== 0) {
+    perguntas.length = 0;
+    alert("Preencha os dados corretamente");
+  } else {
+    renderizarCriarNiveis();
+    criarPerguntas.classList.add("hidden");
+    criarNiveis.classList.remove("hidden");
+    window.scrollTo(0, 0);
+  }
 }
+
+function renderizarCriarNiveis() {
+  let criarNiveis = document.querySelector(".criar-niveis");
+  for(let i = 2; i <= qntdPerguntas; i++) {
+    criarNiveis.innerHTML += `<fieldset>
+    <div class="nivel-title">
+    <h2>Nível ${i}</h2>
+    <img class ="icon-edit" onclick = "mostrarCampos(this)" src="/imgs_pg1/Icone-editar.png" alt="icone">
+    </div>
+    <div class="form-container hidden">
+    <div class="niveis-form">
+        <input class="tituloNivel${i}" type="text" placeholder="Título do nível (mínimo: 10 caracteres)">
+        <input class="porcentagem${i}" type="text" placeholder="% de acerto mínima">
+        <input class="url${i}" type="text" placeholder="URL da imagem do nível">
+        <textarea name="" class="nivel-descricao descricao${i}" placeholder="Descrição do nível"></textarea>
+    </div>
+    </div>
+</fieldset>`
+  }
+  criarNiveis.innerHTML += '<button onclick="finalizarQuizz()">Finalizar Quizz</button>'
+}
+
+
+function finalizarQuizz() {
+  let verificador = 0;
+  for(i = 1; i <= qntdNiveis; i++) {
+    tituloNivel = document.querySelector(`.tituloNivel${i}`).value;
+    porcentagemMinima = document.querySelector(`.porcentagem${i}`).value;
+    imgURL_nivel = document.querySelector(`.url${i}`).value;
+    descricaoNivel = document.querySelector(`.descricao${i}`).value;
+    const reg = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+    if(tituloNivel < 10 || porcentagemMinima > 100 || reg.test(imgURL_nivel) === false || descricaoNivel < 30){
+      verificador++;
+    } else {
+      objLevels = {
+          title: `${tituloNivel}`,
+          image: `${imgURL_nivel}`,
+          text: `${descricaoNivel}`,
+          minValue: `${porcentagemMinima}`
+        }
+    }
+    niveis.push(objLevels);
+  }
+  if(verificador !== 0) {
+    niveis.length = 0;
+    alert("Preencha os dados corretamente");
+  } else {
+    let quiz = {title: `${titulo}`,
+    image: `${imgURL}`, questions: perguntas, levels: niveis}
+    renderizarPaginaFinal();
+    const requisicao = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", quiz)
+    requisicao.then(function(resposta){console.log(resposta)});
+    requisicao.catch(function(erro){alert("Deu erro")});
+    // criarPerguntas.classList.add("hidden");
+    // criarNiveis.classList.remove("hidden");
+    window.scrollTo(0, 0);
+  }
+}
+
+function renderizarPaginaFinal() {
+
+}
+
 
 const promessa = axios.get(
   "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes"
