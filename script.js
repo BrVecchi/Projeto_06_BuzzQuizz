@@ -20,6 +20,9 @@ let PorcentagemMinima = "";
 let imgURL_nivel = "";
 let descricaoNivel
 let niveis = [];
+let x = 0;
+let acertos = 0;
+let erros = 0;
 
 
 const quizzes = document.querySelector(".quizzes");
@@ -288,40 +291,6 @@ function mostrarQuizzes(resposta) {
       url(${dados[i].image})`;
   }
 }
-const adicionarPerguntas = document.querySelector(".pagina2");
-function renderizarQuizz(quizzesLoucos) {
-  const arrayQuizzes = quizzesLoucos.data;
-  const quizes = arrayQuizzes[0];
-  console.log(quizes);
-
-  let body = `
-  <img class="bannerquiz" src="${quizes.image}">
-    <div class="tituloQuiz">${quizes.title}</div>
-  </img>
-  `;
-
-  for (const question of quizes.questions) {
-    body += `
-        <div class="Perguntaquiz">
-            <div class="textoPergunta">
-                ${question.title}
-            </div>
-    `;
-
-    for (const answer of question.answers) {
-        body += `
-        <div class="caixa1">
-            <img class="img1" src="${answer.image}" />
-            <div class="titulocaixa">${answer.text}</div>
-        </div>
-        ` 
-    }
-
-    body += `</div>`;
-  }
-    adicionarPerguntas.innerHTML = adicionarPerguntas.innerHTML + body;
-}
-
 function selecionarQuizz(quizz) {
   const identificador = quizz.id.replace(/[^0-9]/g, "");
   console.log(dadosRecebidos[0].id)
@@ -337,3 +306,89 @@ function selecionarQuizz(quizz) {
   document.querySelector(".pagina2").classList.remove("hidden");
 }
 
+//Pagina2 
+const adicionarPerguntas = document.querySelector(".pagina2");
+function renderizarQuizz(quizzesLoucos) {
+  const arrayQuizzes = quizzesLoucos.data;
+  const quizes = arrayQuizzes[0];
+  console.log(arrayQuizzes);
+
+
+
+    const mudarCor = quizes.questions;
+  let body = `
+  <div class = topPerguntaQuiz> 
+  <div class="bannerquiz"><p class="tituloQuiz">${quizes.title}</p></div>
+  </div>
+  `;
+  for (const question of quizes.questions) {
+
+    body += `
+        <div class="Perguntaquiz">
+            <p id="indentificador${x}" class="textoPergunta">
+                ${question.title}
+            </p>
+            <div class="divSeguraAsPerguntas ${x}">
+    `;
+    
+
+    for (const answer of question.answers) {
+        body += `
+        <div class="caixa1" value="${answer.isCorrectAnswer}" onclick="respostaSelecionada(this, indentificador${x})">
+            <img class="img1" src="${answer.image}" />
+            <p class="titulocaixa">${answer.text}</p>
+        </div>
+        ` 
+    }
+
+    x++;
+    body += `</div>  </div>`;
+ 
+  }   for(const levels of quizes.levels){
+    console.log(levels);
+    body += `<div class="QuizFinalizado hidden">
+    <div class="porcentagemDeAcerto"><p class="tituloFinalQuiz">${levels.title}</p></div>
+    <div class="imagemEsubtitulo">
+    <img class="imagenFinalQuiz" src="${levels.image}"/>
+    <div class="SubtituloFinal">${levels.text}</div>
+      </div>`
+}
+    adicionarPerguntas.innerHTML = adicionarPerguntas.innerHTML + body;
+    document.querySelector('.bannerquiz').style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url(${quizes.image})`;
+    for(let i = 0; i<mudarCor.length; i++){
+        document.querySelector(`#indentificador${i}`).style.backgroundColor = mudarCor[i].color;
+    }
+}
+function respostaSelecionada(respostaEscolhida){
+    const clicked = respostaEscolhida;
+    const parent = clicked.parentElement;
+
+    for (const element of parent.children) {
+        element.onclick = () => {};
+        // change text color
+        if (element.attributes.value.value === "true") {
+            element.children[1].className += " color-green";
+            
+            if (element === clicked) {
+                acertos++;
+            }else{
+                erros++;
+            }
+        } else {
+            element.children[1].className += " color-red";
+        }
+ 
+        // set opacity for not chosen elements
+        if (element !== clicked) {
+            element.className += " opacity-60";
+        }
+        
+
+    }
+    if(acertos+erros===x){
+       setTimeout (finalizandoQuiz, 2000);
+    }
+}
+function finalizandoQuiz(){
+    alert('parabens voce finalizou o Quiz');
+}
