@@ -383,9 +383,8 @@ function renderizarQuizz(quizz) {
         <img class="imagenFinalQuiz" src="${levels.image}"/>
         <div class="SubtituloFinal">${levels.text}</div>
       </div>
-      <div class="botaoReproduzirQuiz"
-    <button onclick="reproduzirQuiz()">Reiniciar Quizz</button>
-    </div>
+    <button class="botaoReproduzirQuiz" onclick="reproduzirQuiz()">Reiniciar Quizz</button>
+    <button class="VoltarPraHome" onclick="VoltarPraHome()">Voltar pra home Quizz</button>
     </div>
 `
 }
@@ -463,4 +462,9 @@ function finalizandoQuiz(){
   
   const textoFinal = elementoQueQueroQueApareca.getElementsByClassName('tituloFinalQuiz')[0];
   textoFinal.innerHTML = `${arredondaPorcentagem}% de acerto: ${textoFinal.innerHTML}`;
+}
+function reproduzirQuiz(){
+}
+function VoltarPraHome(){
+
 }

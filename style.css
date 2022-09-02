@@ -302,6 +302,36 @@ body {
   color: #FFFFFF;
 
   }
+  .botaoReproduzirQuiz{
+    border: 1px  #d5d5d5;
+    border-radius: 15px;
+    height: 52px;
+    width: 260.3px;
+    background-color: #EC362D;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+  .VoltarPraHome{
+    border: 1px  #E5E5E5;
+    border-radius: 15px;
+    height: 52px;
+    width: 260.3px;
+    background-color: #E5E5E5;
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+  }
+  .textoVoltarPraHome{
+    font-family: 'Roboto', sans-serif;
+    font-size: 21px;
+    font-weight: 400;
+    color: #818181;
+  }
 /*-------------------INÍCIO PÁGINA 3------------------*/
 .criar-quiz {
     margin-top: 69px;
@@ -511,16 +541,4 @@ gap: 14px;
 
 .hidden {
   display:none;
-}
-.botaoReproduzirQuiz{
-  border: 1px  #d5d5d5;
-  border-radius: 15px;
-  height: 52px;
-  width: 260.3px;
-  background-color: #EC362D;
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 30px;
 }
