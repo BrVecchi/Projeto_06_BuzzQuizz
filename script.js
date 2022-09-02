@@ -20,13 +20,75 @@ let PorcentagemMinima = "";
 let imgURL_nivel = "";
 let descricaoNivel
 let niveis = [];
+let id_quizzes_usuario = [];
 let x = 0;
 let acertos = 0;
 let erros = 0;
 
 
 const quizzes = document.querySelector(".quizzes");
+const quizzes_pessoal = document.querySelector(".quizzes-pessoal");
 let dadosRecebidos;
+
+function pegarQuizzes() {
+  const promessa = axios.get(
+    "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes"
+  );
+  promessa.then(mostrarQuizzes);
+}
+pegarQuizzes();
+
+function mostrarQuizzes(resposta) {
+  let quizz = "";
+  let quizz_pessoal = "";
+  const dados = resposta.data;
+  dadosRecebidos = dados;
+  quizzes.innerHTML = "";
+  quizzes_pessoal.innerHTML = "";
+  for (let i = 0; i < dados.length; i++) {
+      if (id_quizzes_usuario[0] !== undefined) {
+      for (let j = 0; j < id_quizzes_usuario.length; j++) {
+        if (dados[i].id !== id_quizzes_usuario[j]) {
+          quizz = `
+            <li id="quizz${dados[i].id}" class="quizz" onclick="selecionarQuizz(this)">
+              <p class="texto-quizz">${dados[i].title}</p>
+            </li>`;
+        } else {
+          quizz_pessoal = `
+            <li id="quizz${dados[i].id}" class="quizz" onclick="selecionarQuizz(this)">
+              <p class="texto-quizz">${dados[i].title}</p>
+            </li>`
+        }
+      }
+    } else {
+      quizz = `
+            <li id="quizz${dados[i].id}" class="quizz" onclick="selecionarQuizz(this)">
+              <p class="texto-quizz">${dados[i].title}</p>
+            </li>`;
+    }
+    quizzes.innerHTML = quizzes.innerHTML + quizz;
+    quizzes_pessoal.innerHTML = quizzes_pessoal.innerHTML + quizz_pessoal;
+    document.querySelector(`#quizz${dados[i].id}`).style.backgroundImage = `
+        linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%),
+        url(${dados[i].image})
+      `;
+  }
+}
+
+function selecionarQuizz(quizz) {
+  const identificador = quizz.id.replace(/[^0-9]/g, "");
+  console.log(dadosRecebidos[0].id)
+  let quizzSelecionado;
+  for (let i=0; i<dadosRecebidos.length; i++) {
+    if (identificador == dadosRecebidos[i].id) {
+      quizzSelecionado = dadosRecebidos[i];
+    }
+  }
+  console.log(quizzSelecionado);
+
+  document.querySelector(".pagina1").classList.add("hidden");
+  document.querySelector(".pagina2").classList.remove("hidden");
+}
 
 function addInfo() {
   let basicInfo = document.querySelector(".basic-info-container");
@@ -255,55 +317,6 @@ function finalizarQuizz() {
 
 function renderizarPaginaFinal() {
 
-}
-
-
-const promessa = axios.get(
-  "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes"
-);
-promessa.then(mostrarQuizzes);
-promessa.then(renderizarQuizz);
-promessa.then(mostrarQuizzes)
-// promessa.then(renderizarQuizz);
-
-function mostrarQuizzes(resposta) {
-  let quizz = "";
-  const dados = resposta.data;
-  dadosRecebidos = dados;
-  console.log(dados);
-  quizzes.innerHTML = "";
-  for (i = 0; i < dados.length; i++) {
-    quizz = `
-    <li id="quizz${dados[i].id}" class="quizz" onclick="selecionarQuizz(this)">
-        <p class="texto-quizz">${dados[i].title}</p>
-    </li>`;
-    quizzes.innerHTML = quizzes.innerHTML + quizz;
-    document.querySelector(
-
-      `#quizz${i}`
-      `#quizz${dados[i].id}`
-    ).style.backgroundImage = `linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(0, 0, 0, 0.5) 64.58%,
-        #000000 100%
-      ),
-      url(${dados[i].image})`;
-  }
-}
-function selecionarQuizz(quizz) {
-  const identificador = quizz.id.replace(/[^0-9]/g, "");
-  console.log(dadosRecebidos[0].id)
-  let quizzSelecionado;
-  for (let i=0; i<dadosRecebidos.length; i++) {
-    if (identificador == dadosRecebidos[i].id) {
-      quizzSelecionado = dadosRecebidos[i];
-    }
-  }
-  console.log(quizzSelecionado);
-
-  document.querySelector(".pagina1").classList.add("hidden");
-  document.querySelector(".pagina2").classList.remove("hidden");
 }
 
 //Pagina2 

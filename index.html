@@ -22,10 +22,17 @@
     </div>
 
     <div class="container">
-        <div class="pagina1 hidden">
-            <div class="quizzes-pessoal">
-                <p class="texto-quizzes-pessoal-vaziu">Você não criou nenhum <br> quizz ainda :(</p>
+        <div class="pagina1">
+            <div class="quizzes-pessoal-vazio">
+                <p class="texto-quizzes-pessoal-vazio">Você não criou nenhum <br> quizz ainda :(</p>
                 <button class="botao-criar-quizz">Criar Quizz</button>
+            </div>
+            <div class="quizzes-pessoal-container hidden">
+                <div class="quizzes-container-topo">
+                    <p class="texto-quizzes-pessoal">Seus Quizzes</p>
+                    <button class="botao-criar-quizz-pequeno">+</button>
+                </div>
+                <ul class="quizzes-pessoal"></ul>
             </div>
 
             <div class="quizzes-container">
@@ -33,7 +40,7 @@
                 <ul class="quizzes"></ul>
             </div>
         </div>
-    </div> 
+        
         <div class="pagina2">
         </div>
         <div class="pagina3 criar-quiz hidden">
