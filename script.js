@@ -90,6 +90,11 @@ function selecionarQuizz(quizz) {
   document.querySelector(".pagina2").classList.remove("hidden");
 }
 
+function criarQuizz() {
+  document.querySelector(".pagina1").classList.add("hidden");
+  document.querySelector(".pagina3").classList.remove("hidden");
+}
+
 function addInfo() {
   let basicInfo = document.querySelector(".basic-info-container");
   let criarPerguntas = document.querySelector(".criar-perguntas-container")
