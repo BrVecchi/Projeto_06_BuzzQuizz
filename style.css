@@ -282,6 +282,14 @@ body {
     text-align: center;
     
   }
+  .Perguntaquiz{
+    width: 759px;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 30px;
+    background-color: #FFFFFF;
+    margin: 30px;
+  }
 /*-------------------INÍCIO PÁGINA 3------------------*/
 .criar-quiz {
     margin-top: 69px;

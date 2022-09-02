@@ -21,9 +21,7 @@ let imgURL_nivel = "";
 let descricaoNivel
 let niveis = [];
 let id_quizzes_usuario = [];
-let x = 0;
-let acertos = 0;
-let erros = 0;
+
 
 
 const quizzes = document.querySelector(".quizzes");
@@ -35,6 +33,7 @@ function pegarQuizzes() {
     "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes"
   );
   promessa.then(mostrarQuizzes);
+  promessa.then(renderizarQuizz);
 }
 pegarQuizzes();
 
@@ -329,9 +328,14 @@ function renderizarPaginaFinal() {
 }
 
 //Pagina2 
+let x = 0;
+let acertos = 0;
+let erros = 0;
+
 const adicionarPerguntas = document.querySelector(".pagina2");
-function renderizarQuizz(quizzesLoucos) {
-  const arrayQuizzes = quizzesLoucos.data;
+function renderizarQuizz(quizz) {
+  console.log(quizz);
+  const arrayQuizzes = quizz.data;
   const quizes = arrayQuizzes[0];
   console.log(arrayQuizzes);
 
@@ -343,6 +347,7 @@ function renderizarQuizz(quizzesLoucos) {
   <div class="bannerquiz"><p class="tituloQuiz">${quizes.title}</p></div>
   </div>
   `;
+
   for (const question of quizes.questions) {
 
     body += `
@@ -356,7 +361,7 @@ function renderizarQuizz(quizzesLoucos) {
 
     for (const answer of question.answers) {
         body += `
-        <div class="caixa1" value="${answer.isCorrectAnswer}" onclick="respostaSelecionada(this, indentificador${x})">
+        <div class="caixa1" value="${answer.isCorrectAnswer}" next="indentificador${x+1}" onclick="respostaSelecionada(this)">
             <img class="img1" src="${answer.image}" />
             <p class="titulocaixa">${answer.text}</p>
         </div>
@@ -384,7 +389,8 @@ function renderizarQuizz(quizzesLoucos) {
 function respostaSelecionada(respostaEscolhida){
     const clicked = respostaEscolhida;
     const parent = clicked.parentElement;
-
+    const elementoQueQueroQueApareca = document.getElementById(clicked.attributes.next.value);
+    
     for (const element of parent.children) {
         element.onclick = () => {};
         // change text color
@@ -409,8 +415,13 @@ function respostaSelecionada(respostaEscolhida){
     }
     if(acertos+erros===x){
        setTimeout (finalizandoQuiz, 2000);
+    } else {
+      setTimeout (() => { elementoQueQueroQueApareca.scrollIntoView(); }, 2000);
     }
 }
 function finalizandoQuiz(){
-    alert('parabens voce finalizou o Quiz');
+
+    const elementoQueQueroQueApareca = document.querySelector('.QuizFinalizado');
+    elementoQueQueroQueApareca.classList.remove('hidden');
+elementoQueQueroQueApareca.scrollIntoView();
 }
