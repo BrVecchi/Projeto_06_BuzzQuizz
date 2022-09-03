@@ -42,7 +42,7 @@ body {
 }
 /* --------------------INÍCIO PAGINA 1--------------------*/
 .pagina1 {
-  width: 1058px;
+  width: 85%;
   height: auto;
   margin-top: 77px;
   margin-bottom: 12px;
@@ -140,7 +140,7 @@ body {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  gap: 19px;
 }
 
 .quizz {
