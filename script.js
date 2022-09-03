@@ -95,7 +95,7 @@ function selecionarQuizz(quizz) {
 
 function criarQuizz() {
   document.querySelector(".pagina1").classList.add("hidden");
-  document.querySelector(".pagina3").classList.remove("hidden");
+  document.querySelector(".basic-info-container").classList.remove("hidden");
 }
 
 
@@ -489,5 +489,10 @@ function finalizandoQuiz(){
 function reproduzirQuiz(){
 }
 function VoltarPraHome(){
-
+  pegarQuizzes();
+  console.log("Foooi");
+  document.querySelector(".pagina1").classList.remove("hidden");
+  document.querySelector(".pagina2").classList.add("hidden");
+  document.querySelector(".quizz-finalizado-container").classList.add("hidden");
+  window.scrollTo(0, 0);
 }
