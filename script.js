@@ -314,12 +314,14 @@ function renderizarCriarNiveis() {
     '<button onclick="finalizarQuizz()">Finalizar Quizz</button>';
 }
 
+let arrayIds = [];
+
 function finalizarQuizz() {
   let quizzFinalizado = document.querySelector(".quizz-finalizado-container");
   let criarNiveis = document.querySelector(".criar-niveis-container");
   let verificador = 0;
   let porcentagemZero = false;
-  let arrayIds = [];
+  arrayIds = id_quizzes_usuario;
   for (i = 1; i <= qntdNiveis; i++) {
     tituloNivel = document.querySelector(`.tituloNivel${i}`).value;
     porcentagemMinima = document.querySelector(`.porcentagem${i}`).value;
