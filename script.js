@@ -395,7 +395,7 @@ function renderizarPaginaFinal() {
 }
 
 function acessarQuizz() {
-  renderizarQuizz(quizzCriado)
+  renderizarQuizz(quizzCriado);
   document.querySelector(".pagina3").classList.add("hidden");
   document.querySelector(".pagina2").classList.remove("hidden");
 }
@@ -409,6 +409,7 @@ let mudarCor;
 let adicionarPerguntas = document.querySelector(".pagina2");
 
 function renderizarQuizz(quizz) {
+  quizzSelecionado = quizz;
   acertos = 0;
   erros = 0;
   x = 0;
