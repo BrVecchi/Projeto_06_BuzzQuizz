@@ -21,6 +21,7 @@ let imgURL_nivel = "";
 let descricaoNivel;
 let niveis = [];
 let id_quizzes_usuario = [];
+let quizzSelecionado;
 
 const quizzes = document.querySelector(".quizzes");
 const quizzes_pessoal = document.querySelector(".quizzes-pessoal");
@@ -81,7 +82,6 @@ function mostrarQuizzes(resposta) {
 function selecionarQuizz(quizz) {
   const identificador = quizz.id.replace(/[^0-9]/g, "");
   console.log(dadosRecebidos[0].id);
-  let quizzSelecionado;
   for (let i = 0; i < dadosRecebidos.length; i++) {
     if (identificador == dadosRecebidos[i].id) {
       quizzSelecionado = dadosRecebidos[i];
@@ -391,7 +391,7 @@ let erros = 0;
 const adicionarPerguntas = document.querySelector(".pagina2");
 function renderizarQuizz(quizz) {
   console.log(quizz);
-
+  adicionarPerguntas.innerHTML = "";
   const mudarCor = quizz.questions;
   let body = `
   <div class = topPerguntaQuiz> 
@@ -524,7 +524,11 @@ function finalizandoQuiz() {
     elementoQueQueroQueApareca.getElementsByClassName("tituloFinalQuiz")[0];
   textoFinal.innerHTML = `${arredondaPorcentagem}% de acerto: ${textoFinal.innerHTML}`;
 }
-function reproduzirQuiz() {}
+
+function reproduzirQuiz() {
+  renderizarQuizz(quizzSelecionado);
+}
+
 function VoltarPraHome() {
   window.location.reload();
 }
