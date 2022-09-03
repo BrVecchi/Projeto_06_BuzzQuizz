@@ -21,10 +21,17 @@ let imgURL_nivel = "";
 let descricaoNivel;
 let niveis = [];
 let id_quizzes_usuario = [];
+let id_do_quizz_selecionado;
 let quizzSelecionado;
 
-const quizzes = document.querySelector(".quizzes");
-const quizzes_pessoal = document.querySelector(".quizzes-pessoal");
+id_do_quizz_selecionado = localStorage.getItem("identificador");
+id_quizzes_usuario.push(Number(id_do_quizz_selecionado));
+console.log(id_quizzes_usuario);
+console.log(id_quizzes_usuario);
+console.log(id_quizzes_usuario);
+
+let quizzes = document.querySelector(".quizzes");
+let quizzes_pessoal = document.querySelector(".quizzes-pessoal");
 let dadosRecebidos;
 
 //---------------------------INICIO PAGINA 1-----------------------------------------------
@@ -43,14 +50,14 @@ function mostrarQuizzes(resposta) {
   dadosRecebidos = dados;
   quizzes.innerHTML = "";
   quizzes_pessoal.innerHTML = "";
-  if (id_quizzes_usuario[0] !== undefined) {
+  if (id_quizzes_usuario[0] !== null) {
     document.querySelector(".quizzes-pessoal-vazio").classList.add("hidden");
     document
       .querySelector(".quizzes-pessoal-container")
       .classList.remove("hidden");
   }
   for (let i = 0; i < dados.length; i++) {
-    if (id_quizzes_usuario[0] !== undefined) {
+    if (id_quizzes_usuario[0] !== null) {
       for (let j = 0; j < id_quizzes_usuario.length; j++) {
         if (dados[i].id !== id_quizzes_usuario[j]) {
           quizz = `
@@ -62,6 +69,7 @@ function mostrarQuizzes(resposta) {
             <li id="quizz${dados[i].id}" class="quizz" onclick="selecionarQuizz(this)">
               <p class="texto-quizz">${dados[i].title}</p>
             </li>`;
+          quizzes_pessoal.innerHTML = quizzes_pessoal.innerHTML + quizz_pessoal;
         }
       }
     } else {
@@ -71,7 +79,6 @@ function mostrarQuizzes(resposta) {
             </li>`;
     }
     quizzes.innerHTML = quizzes.innerHTML + quizz;
-    quizzes_pessoal.innerHTML = quizzes_pessoal.innerHTML + quizz_pessoal;
     document.querySelector(`#quizz${dados[i].id}`).style.backgroundImage = `
         linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%),
         url(${dados[i].image})
@@ -360,7 +367,7 @@ function finalizarQuizz() {
     );
     requisicao.then(function (resposta) {
       console.log(resposta);
-      id_quizzes_usuario.push(resposta.data.id);
+      localStorage.setItem("identificador", `${resposta.data.id}`);
     });
     requisicao.catch(function (erro) {
       alert("Erro ao criar quizz");
@@ -441,7 +448,7 @@ function renderizarQuizz(quizz) {
         <div class="SubtituloFinal">${levels.text}</div>
       </div>
     <button class="botaoReproduzirQuiz" onclick="reproduzirQuiz()">Reiniciar Quizz</button>
-    <button class="VoltarPraHome" onclick="VoltarPraHome()">Voltar pra home Quizz</button>
+    <button class="VoltarPraHome" onclick="VoltarPraHome()">Voltar pra home</button>
     </div>
 `;
   }
@@ -535,6 +542,7 @@ function finalizandoQuiz() {
 function reproduzirQuiz() {
   console.log(quizzSelecionado);
   renderizarQuizz(quizzSelecionado);
+  window.scrollTo(0, 0);
 }
 
 function VoltarPraHome() {

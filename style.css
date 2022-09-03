@@ -42,8 +42,7 @@ body {
 }
 /* --------------------INÍCIO PAGINA 1--------------------*/
 .pagina1 {
-  width: 70%;
-  max-width: 1058px;
+  width: 1058px;
   height: auto;
   margin-top: 77px;
   margin-bottom: 12px;
@@ -80,13 +79,14 @@ body {
 
 .quizzes-pessoal-container {
   width: 100%;
+  margin-bottom: 48px;
 }
 
 .quizzes-pessoal {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: space-between;
 }
 
 .botao-criar-quizz {
@@ -105,9 +105,12 @@ body {
 
 .botao-criar-quizz-pequeno {
   background-color: #ec362d;
+  color: white;
+  border: none;
   border-radius: 500px;
   width: 31px;
   height: 30px;
+  font-size: 21px;
   text-align: center;
   margin-bottom: 0px;
   margin-left: 17px;
@@ -133,6 +136,7 @@ body {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .quizz {
@@ -152,7 +156,6 @@ body {
   align-items: flex-end;
   margin-top: 12px;
   cursor: pointer;
-  margin-right: 12px;
 }
 
 .texto-quizz {
@@ -301,6 +304,9 @@ body {
   color: #ffffff;
 }
 .botaoReproduzirQuiz {
+  font-family: "Roboto", sans-serif;
+  color: #fff5f4;
+  font-size: 21px;
   border: 1px #d5d5d5;
   border-radius: 15px;
   height: 52px;
@@ -310,19 +316,23 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 40px;
 }
+
 .VoltarPraHome {
-  border: 1px #e5e5e5;
-  border-radius: 15px;
+  font-family: "Roboto", sans-serif;
+  font-size: 21px;
+  color: #818181;
+  border: none;
+  background-color: white;
   height: 52px;
   width: 260.3px;
-  background-color: #e5e5e5;
   margin: auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 16px;
+  margin-bottom: 30px;
 }
 .textoVoltarPraHome {
   font-family: "Roboto", sans-serif;
