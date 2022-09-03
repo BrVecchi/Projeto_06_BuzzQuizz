@@ -400,6 +400,8 @@ let mudarCor;
 let adicionarPerguntas = document.querySelector(".pagina2");
 
 function renderizarQuizz(quizz) {
+  acertos = 0;
+  erros = 0;
   x = 0;
   adicionarPerguntas.innerHTML = "";
   body = `
