@@ -184,7 +184,7 @@ function guardarPerguntas() {
     resposta4 = document.querySelector(`.incorreta3-pergunta${i}`).value;
     img4 = document.querySelector(`.resposta${i}-img4`).value;
     const reg = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-    if(tituloPergunta.length < 20 || resposta1 === "" || resposta2 === "" || reg.test(img1) === false || reg.test(img2) === false || (reg.test(img3) === false && img3 !== "") || (reg.test(img4) === false && img4 !== "")){
+    if(tituloPergunta.length < 20 || cor.length !== 7 || resposta1 === "" || resposta2 === "" || reg.test(img1) === false || reg.test(img2) === false || (reg.test(img3) === false && img3 !== "") || (reg.test(img4) === false && img4 !== "")){
       verificador++;
     }
     if(tituloPergunta.length > 10000){
@@ -487,6 +487,7 @@ function finalizandoQuiz(){
   textoFinal.innerHTML = `${arredondaPorcentagem}% de acerto: ${textoFinal.innerHTML}`;
 }
 function reproduzirQuiz(){
+
 }
 function VoltarPraHome(){
   pegarQuizzes();

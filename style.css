@@ -333,14 +333,12 @@ body {
     color: #818181;
   }
 /*-------------------INÍCIO PÁGINA 3------------------*/
-.criar-quiz {
-    margin-top: 69px;
-}
 
 .basic-info {
     width: 100%;
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
     align-items: center;
     position: absolute;
     top: 0;
@@ -393,7 +391,7 @@ input::placeholder, .nivel-descricao::placeholder {
     color: #BABABA;
 }
 
-.pagina3 button, .submit {
+.pagina3 button {
     width: 355px;
     height: 54px;
     background-color: #EC362D;
@@ -419,9 +417,10 @@ button:hover {
     width: 100%;
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
     align-items: center;
     position: absolute;
-    top: 69px;
+    top: 0;
     left: 0;
     z-index: 2;
 }
@@ -457,6 +456,7 @@ button:hover {
     width: 600px;
     display: flex;
     flex-direction: column; 
+    flex-wrap: nowrap;
     align-items: center;
     gap: 28px;
 }
@@ -495,6 +495,7 @@ gap: 14px;
   width: 100%;
     display: flex;
     flex-direction: column;
+    flex-wrap: nowrap;
     align-items: center;
     position: absolute;
     top: 0;
@@ -502,7 +503,7 @@ gap: 14px;
     z-index: 2;
 }
 
-.criar-niveis fieldset {
+/* .criar-niveis fieldset {
   width: 600px;
   height: auto;
   display: flex;
@@ -512,7 +513,7 @@ gap: 14px;
   margin-bottom: 28px;
   background-color: #FFFFFF;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.05);
-}
+} */
 
 .niveis-form {
   width: 600px;
@@ -540,7 +541,7 @@ gap: 14px;
   height: 90vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  flex-wrap: nowrap;
   align-items: center;
   position: absolute;
   top: 0;
@@ -597,4 +598,45 @@ gap: 14px;
 
 .hidden {
   display:none;
+}
+
+
+@media (max-width: 600px) {
+
+  .pagina3 h1 {
+    margin-top: 37px;
+  }
+  .basic-info fieldset, .criar-perguntas fieldset, .criar-niveis fieldset {
+    width: 100%;
+}
+.pagina3 button {
+  width: 88%;
+  height: 54px;
+}
+.pergunta-title, .nivel-title {
+  width: 100%;
+}
+.form {
+  width: 100%;
+}
+.niveis-form {
+  width: 100%;
+}
+.nivel-descricao {
+  width: 100%;
+}
+.img-quizz-finalizado {
+  width: 95%;
+  height: 52vw;
+  margin-left:6px;
+}
+.quizz-finalizado img {
+  width: 95%;
+  height: auto;
+  margin-left:6px;
+}
+.img-quizz-container {
+  width: 95%;
+  margin-left:6px;
+}
 }
