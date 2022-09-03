@@ -91,6 +91,7 @@ function selecionarQuizz(quizz) {
   renderizarQuizz(quizzSelecionado);
   document.querySelector(".pagina1").classList.add("hidden");
   document.querySelector(".pagina2").classList.remove("hidden");
+  window.scrollTo(0, 0);
 }
 
 function criarQuizz() {
@@ -359,6 +360,7 @@ function finalizarQuizz() {
     );
     requisicao.then(function (resposta) {
       console.log(resposta);
+      id_quizzes_usuario.push(resposta.data.id);
     });
     requisicao.catch(function (erro) {
       alert("Erro ao criar quizz");
@@ -384,16 +386,17 @@ function renderizarPaginaFinal() {
 }
 
 //-----------------------------Pagina2-------------------------------------------
-let x = 0;
+let x;
 let acertos = 0;
 let erros = 0;
+let body;
+let mudarCor;
+let adicionarPerguntas = document.querySelector(".pagina2");
 
-const adicionarPerguntas = document.querySelector(".pagina2");
 function renderizarQuizz(quizz) {
-  console.log(quizz);
+  x = 0;
   adicionarPerguntas.innerHTML = "";
-  const mudarCor = quizz.questions;
-  let body = `
+  body = `
   <div class = topPerguntaQuiz> 
   <div class="bannerquiz"><p class="tituloQuiz">${quizz.title}</p></div>
   </div>
@@ -446,11 +449,15 @@ function renderizarQuizz(quizz) {
   document.querySelector(
     ".bannerquiz"
   ).style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.57), rgba(0, 0, 0, 0.57)), url(${quizz.image})`;
-  for (let i = 0; i < mudarCor.length; i++) {
+  trocarCor(quizz);
+}
+function trocarCor(quizz) {
+  for (let i = 0; i < quizz.questions.length; i++) {
     document.querySelector(`#indentificador${i}`).style.backgroundColor =
-      mudarCor[i].color;
+      quizz.questions[i].color;
   }
 }
+
 function respostaSelecionada(respostaEscolhida) {
   const clicked = respostaEscolhida;
   const parent = clicked.parentElement;
@@ -526,6 +533,7 @@ function finalizandoQuiz() {
 }
 
 function reproduzirQuiz() {
+  console.log(quizzSelecionado);
   renderizarQuizz(quizzSelecionado);
 }
 
