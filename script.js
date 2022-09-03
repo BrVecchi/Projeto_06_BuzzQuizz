@@ -50,12 +50,12 @@ function mostrarQuizzes(resposta) {
   dadosRecebidos = dados;
   quizzes.innerHTML = "";
   quizzes_pessoal.innerHTML = "";
-  // if (id_quizzes_usuario[0] !== null) {
-  //   document.querySelector(".quizzes-pessoal-vazio").classList.add("hidden");
-  //   document
-  //     .querySelector(".quizzes-pessoal-container")
-  //     .classList.remove("hidden");
-  // }
+  if (id_quizzes_usuario[0] !== null) {
+    document.querySelector(".quizzes-pessoal-vazio").classList.add("hidden");
+    document
+      .querySelector(".quizzes-pessoal-container")
+      .classList.remove("hidden");
+  }
   for (let i = 0; i < dados.length; i++) {
     if (id_quizzes_usuario[0] !== null) {
       for (let j = 0; j < id_quizzes_usuario.length; j++) {
@@ -83,12 +83,6 @@ function mostrarQuizzes(resposta) {
         linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%),
         url(${dados[i].image})
       `;
-  }
-  if (id_quizzes_usuario[0] !== null) {
-    document.querySelector(".quizzes-pessoal-vazio").classList.add("hidden");
-    document
-      .querySelector(".quizzes-pessoal-container")
-      .classList.remove("hidden");
   }
 }
 
@@ -198,18 +192,10 @@ function guardarPerguntas() {
     img3 = document.querySelector(`.resposta${i}-img3`).value;
     resposta4 = document.querySelector(`.incorreta3-pergunta${i}`).value;
     img4 = document.querySelector(`.resposta${i}-img4`).value;
-    const reg =
-      /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-    if (
-      tituloPergunta.length < 20 ||
-      cor.length !== 7 ||
-      resposta1 === "" ||
-      resposta2 === "" ||
-      reg.test(img1) === false ||
-      reg.test(img2) === false ||
-      (reg.test(img3) === false && img3 !== "") ||
-      (reg.test(img4) === false && img4 !== "")
-    ) {
+    const regURL = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+    const regCor = /^#[0-9A-F]{6}$/i;
+    if (tituloPergunta.length < 20 || regCor.test(cor) === false  || resposta1 === "" || resposta2 === "" || regURL.test(img1) === false ||
+      regURL.test(img2) === false || (regURL.test(img3) === false && img3 !== "") || (regURL.test(img4) === false && img4 !== "")) {
       verificador++;
     }
     if (tituloPergunta.length > 10000) {
