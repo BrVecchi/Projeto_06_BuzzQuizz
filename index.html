@@ -18,11 +18,11 @@
 <body>
 
     <div class="cabecalho">
-        <h1 class="texto-cabecalho">BuzzQuizz</h1>
+        <h1 class="texto-cabecalho" onclick="VoltarPraHome()">BuzzQuizz</h1>
     </div>
 
     <div class="container">
-        <div class="pagina1 hidden">
+        <div class="pagina1">
             <div class="quizzes-pessoal-vazio">
                 <p class="texto-quizzes-pessoal-vazio">Você não criou nenhum <br> quizz ainda :(</p>
                 <button class="botao-criar-quizz" onclick="criarQuizz()">Criar Quizz</button>
@@ -40,17 +40,18 @@
                 <ul class="quizzes"></ul>
             </div>
         </div>
-        
+
         <div class="pagina2 hidden">
         </div>
-        <div class="pagina3 criar-quiz">
-            <div class="basic-info-container hidden">
+        <div class="pagina3 criar-quiz hidden">
+            <div class="basic-info-container">
                 <div class="basic-info">
                     <h1>Comece pelo começo</h1>
                     <fieldset>
                         <input class="titulo" type="text" placeholder="Título do seu quizz (Entre 20 e 65 caracteres)">
                         <input class="img-url" type="url" placeholder="URL da imagem do seu quizz">
-                        <input class="qntd-perguntas" type="text" placeholder="Quantidade de perguntas do quizz (mínimo: 3)">
+                        <input class="qntd-perguntas" type="text"
+                            placeholder="Quantidade de perguntas do quizz (mínimo: 3)">
                         <input class="qntd-niveis" type="text" placeholder="Quantidade de níveis do quizz (mínimo: 2)">
                     </fieldset>
                     <button onclick="addInfo()">Prosseguir para perguntas</button>
@@ -62,34 +63,39 @@
                     <fieldset>
                         <h2>Pergunta 1</h2>
                         <div class="form-container">
-                        <div class="form">
-                        <div class="campo-pergunta">
-                            <input class="tituloPergunta1" type="text" placeholder="Texto da pergunta (mínimo: 20 caracteres)">
-                            <input class="cor1" type="text" placeholder="Cor de fundo da pergunta (formato: #123456)">
-                        </div>
-                        <div class="campo-correta">
-                            <h2>Resposta correta</h2>
-                            <input class="correta1" type="text" placeholder="Resposta correta">
-                            <input class = "resposta1-img1" type="text" placeholder="URL da imagem">
-                        </div>
-                        <div class="campo-incorretas">
-                            <h2>Respostas incorretas</h2>
-                            <div class="incorretas">
-                            <div class="incorreta1">
-                                <input class="incorreta1-pergunta1" type="text" placeholder="Resposta incorreta 1">
-                                <input class = "resposta1-img2" type="text" placeholder="URL da imagem 1">
+                            <div class="form">
+                                <div class="campo-pergunta">
+                                    <input class="tituloPergunta1" type="text"
+                                        placeholder="Texto da pergunta (mínimo: 20 caracteres)">
+                                    <input class="cor1" type="text"
+                                        placeholder="Cor de fundo da pergunta (formato: #123456)">
+                                </div>
+                                <div class="campo-correta">
+                                    <h2>Resposta correta</h2>
+                                    <input class="correta1" type="text" placeholder="Resposta correta">
+                                    <input class="resposta1-img1" type="text" placeholder="URL da imagem">
+                                </div>
+                                <div class="campo-incorretas">
+                                    <h2>Respostas incorretas</h2>
+                                    <div class="incorretas">
+                                        <div class="incorreta1">
+                                            <input class="incorreta1-pergunta1" type="text"
+                                                placeholder="Resposta incorreta 1">
+                                            <input class="resposta1-img2" type="text" placeholder="URL da imagem 1">
+                                        </div>
+                                        <div class="incorreta2">
+                                            <input class="incorreta2-pergunta1" type="text"
+                                                placeholder="Resposta incorreta 2">
+                                            <input class="resposta1-img3" type="text" placeholder="URL da imagem 2">
+                                        </div>
+                                        <div class="incorreta3">
+                                            <input class="incorreta3-pergunta1" type="text"
+                                                placeholder="Resposta incorreta 3">
+                                            <input class="resposta1-img4" type="text" placeholder="URL da imagem 3">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="incorreta2">
-                                <input class="incorreta2-pergunta1" type="text" placeholder="Resposta incorreta 2">
-                                <input class = "resposta1-img3" type="text" placeholder="URL da imagem 2">
-                            </div>
-                            <div class="incorreta3">
-                                <input class="incorreta3-pergunta1" type="text" placeholder="Resposta incorreta 3">
-                                <input class = "resposta1-img4" type="text" placeholder="URL da imagem 3">
-                            </div>
-                            </div>
-                        </div>
-                    </div>
                         </div>
                     </fieldset>
                 </div>
@@ -100,24 +106,26 @@
                     <fieldset>
                         <h2>Nível 1</h2>
                         <div class="form-container">
-                        <div class="niveis-form">
-                            <input class="tituloNivel1" type="text" placeholder="Título do nível (mínimo: 10 caracteres)">
-                            <input class="porcentagem1" type="text" placeholder="% de acerto mínima">
-                            <input class="url1" type="text" placeholder="URL da imagem do nível">
-                            <textarea name="" class="nivel-descricao descricao1" placeholder="Descrição do nível"></textarea>
-                        </div>
+                            <div class="niveis-form">
+                                <input class="tituloNivel1" type="text"
+                                    placeholder="Título do nível (mínimo: 10 caracteres)">
+                                <input class="porcentagem1" type="text" placeholder="% de acerto mínima">
+                                <input class="url1" type="text" placeholder="URL da imagem do nível">
+                                <textarea name="" class="nivel-descricao descricao1"
+                                    placeholder="Descrição do nível"></textarea>
+                            </div>
                         </div>
                     </fieldset>
                 </div>
             </div>
-            <div class="quizz-finalizado-container">
+            <div class="quizz-finalizado-container hidden">
                 <div class="quizz-finalizado">
                     <h1>Seu quizz está pronto!</h1>
                     <div class="img-quizz-container">
-                    <img src="https://odefensor.com.br/site/wp-content/uploads/2019/09/Garfield-capa.jpeg" alt="">
-                    <div class="img-quizz-finalizado">
-                        <h2>Título do quizz</h2>
-                    </div>
+                        <img src="https://odefensor.com.br/site/wp-content/uploads/2019/09/Garfield-capa.jpeg" alt="">
+                        <div class="img-quizz-finalizado">
+                            <h2>Título do quizz</h2>
+                        </div>
                     </div>
                     <button>Acessar quizz</button>
                     <p>Voltar pra home</p>
