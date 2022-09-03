@@ -315,6 +315,7 @@ function renderizarCriarNiveis() {
 }
 
 let arrayIds = [];
+let quizzCriado;
 
 function finalizarQuizz() {
   let quizzFinalizado = document.querySelector(".quizz-finalizado-container");
@@ -365,6 +366,7 @@ function finalizarQuizz() {
     );
     requisicao.then(function (resposta) {
       console.log(resposta);
+      quizzCriado = resposta.data;
       arrayIds.push(resposta.data.id);
       const arrayIdsSerializados = JSON.stringify(arrayIds);
       localStorage.setItem("ids_pessoal", `${arrayIdsSerializados}`);
@@ -388,8 +390,14 @@ function renderizarPaginaFinal() {
       <h2>${titulo}</h2>
   </div>
   </div>
-  <button>Acessar quizz</button>
-  <p onclick="window.location.reload()">Voltar pra home</p>`;
+  <button onclick="acessarQuizz()">Acessar quizz</button>
+  <p onclick="window.location.reload(); ">Voltar pra home</p>`;
+}
+
+function acessarQuizz() {
+  renderizarQuizz(quizzCriado)
+  document.querySelector(".pagina3").classList.add("hidden");
+  document.querySelector(".pagina2").classList.remove("hidden");
 }
 
 //-----------------------------Pagina2-------------------------------------------
