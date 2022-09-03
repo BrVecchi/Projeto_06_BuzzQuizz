@@ -98,6 +98,10 @@ function criarQuizz() {
   document.querySelector(".pagina3").classList.remove("hidden");
 }
 
+
+//---------------------------INICIO PAGINA 3-----------------------------------------------
+
+
 function addInfo() {
   let basicInfo = document.querySelector(".basic-info-container");
   let criarPerguntas = document.querySelector(".criar-perguntas-container")
@@ -106,7 +110,6 @@ function addInfo() {
   qntdPerguntas = document.querySelector(".qntd-perguntas").value;
   qntdNiveis = document.querySelector(".qntd-niveis").value;
   const reg = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-	
   if(titulo.length < 20 || titulo.length > 65 || reg.test(imgURL) === false || qntdPerguntas < 3 || qntdNiveis < 2) {
     alert("Preencha os dados corretamente!");
    } else {
@@ -181,7 +184,10 @@ function guardarPerguntas() {
     resposta4 = document.querySelector(`.incorreta3-pergunta${i}`).value;
     img4 = document.querySelector(`.resposta${i}-img4`).value;
     const reg = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-    if(tituloPergunta < 20 || resposta1 === "" || resposta2 === "" || reg.test(img1) === false || reg.test(img2) === false || (reg.test(img3) === false && img3 !== "") || (reg.test(img4) === false && img4 !== "")){
+    if(tituloPergunta.length < 20 || resposta1 === "" || resposta2 === "" || reg.test(img1) === false || reg.test(img2) === false || (reg.test(img3) === false && img3 !== "") || (reg.test(img4) === false && img4 !== "")){
+      verificador++;
+    }
+    if(tituloPergunta.length > 10000){
       verificador++;
     } else {
     if(resposta3 === "" && resposta4 === "") {
@@ -278,7 +284,7 @@ function renderizarCriarNiveis() {
         <input class="tituloNivel${i}" type="text" placeholder="Título do nível (mínimo: 10 caracteres)">
         <input class="porcentagem${i}" type="text" placeholder="% de acerto mínima">
         <input class="url${i}" type="text" placeholder="URL da imagem do nível">
-        <textarea name="" class="nivel-descricao descricao${i}" placeholder="Descrição do nível"></textarea>
+        <textarea name="" class="nivel-descricao descricao${i}" placeholder="Descrição do nível (mínimo: 30 caracteres)"></textarea>
     </div>
     </div>
 </fieldset>`
@@ -288,26 +294,32 @@ function renderizarCriarNiveis() {
 
 
 function finalizarQuizz() {
+  let quizzFinalizado = document.querySelector(".quizz-finalizado-container");
+  let criarNiveis = document.querySelector(".criar-niveis-container")
   let verificador = 0;
+  let porcentagemZero = false;
   for(i = 1; i <= qntdNiveis; i++) {
     tituloNivel = document.querySelector(`.tituloNivel${i}`).value;
     porcentagemMinima = document.querySelector(`.porcentagem${i}`).value;
     imgURL_nivel = document.querySelector(`.url${i}`).value;
     descricaoNivel = document.querySelector(`.descricao${i}`).value;
     const reg = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-    if(tituloNivel < 10 || porcentagemMinima > 100 || reg.test(imgURL_nivel) === false || descricaoNivel < 30){
-      verificador++;
-    } else {
+    if(porcentagemMinima == 0) {
+      porcentagemZero = true;
+    }
+     if(tituloNivel.length < 10 || porcentagemMinima > 100 || reg.test(imgURL_nivel) === false || descricaoNivel.length < 30){
+       verificador++;
+     } else {
       objLevels = {
           title: `${tituloNivel}`,
           image: `${imgURL_nivel}`,
           text: `${descricaoNivel}`,
           minValue: `${porcentagemMinima}`
         }
-    }
+     }
     niveis.push(objLevels);
   }
-  if(verificador !== 0) {
+  if(verificador !== 0 || porcentagemZero === false) {
     niveis.length = 0;
     alert("Preencha os dados corretamente");
   } else {
@@ -316,18 +328,29 @@ function finalizarQuizz() {
     renderizarPaginaFinal();
     const requisicao = axios.post("https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes", quiz)
     requisicao.then(function(resposta){console.log(resposta)});
-    requisicao.catch(function(erro){alert("Deu erro")});
-    // criarPerguntas.classList.add("hidden");
-    // criarNiveis.classList.remove("hidden");
+    requisicao.catch(function(erro){alert("Erro ao criar quizz")});
+    criarNiveis.classList.add("hidden");
+    quizzFinalizado.classList.remove("hidden");
     window.scrollTo(0, 0);
   }
 }
 
 function renderizarPaginaFinal() {
-
+  let quizzFinalizado = document.querySelector(".quizz-finalizado-container");
+  quizzFinalizado.innerHTML += `<div class="quizz-finalizado">
+  <h1>Seu quizz está pronto!</h1>
+  <div class="img-quizz-container">
+  <img src="${imgURL}" alt="">
+  <div class="img-quizz-finalizado">
+      <h2>${titulo}</h2>
+  </div>
+  </div>
+  <button>Acessar quizz</button>
+  <p>Voltar pra home</p>`
 }
 
-//Pagina2 
+
+//-----------------------------Pagina2------------------------------------------- 
 let x = 0;
 let acertos = 0;
 let erros = 0;
