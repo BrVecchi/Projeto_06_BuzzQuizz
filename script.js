@@ -20,19 +20,20 @@ let PorcentagemMinima = "";
 let imgURL_nivel = "";
 let descricaoNivel;
 let niveis = [];
-let id_quizzes_usuario = [];
+let id_quizzes_usuario = [null];
 let id_do_quizz_selecionado;
 let quizzSelecionado;
-
-id_do_quizz_selecionado = localStorage.getItem("identificador");
-id_quizzes_usuario.push(Number(id_do_quizz_selecionado));
-console.log(id_quizzes_usuario);
-console.log(id_quizzes_usuario);
-console.log(id_quizzes_usuario);
 
 let quizzes = document.querySelector(".quizzes");
 let quizzes_pessoal = document.querySelector(".quizzes-pessoal");
 let dadosRecebidos;
+
+const arrayIdsSerializadosGlobal = localStorage.getItem("ids_pessoal");
+const arrayIdsDeserializados = JSON.parse(arrayIdsSerializadosGlobal);
+  
+if (arrayIdsSerializadosGlobal !== null) {
+  id_quizzes_usuario = arrayIdsDeserializados;
+}
 
 //---------------------------INICIO PAGINA 1-----------------------------------------------
 function pegarQuizzes() {
@@ -50,14 +51,10 @@ function mostrarQuizzes(resposta) {
   dadosRecebidos = dados;
   quizzes.innerHTML = "";
   quizzes_pessoal.innerHTML = "";
-  if (id_quizzes_usuario[0] !== null) {
-    document.querySelector(".quizzes-pessoal-vazio").classList.add("hidden");
-    document
-      .querySelector(".quizzes-pessoal-container")
-      .classList.remove("hidden");
-  }
+
+  console.log(id_quizzes_usuario);
   for (let i = 0; i < dados.length; i++) {
-    if (id_quizzes_usuario[0] !== null) {
+    if (id_quizzes_usuario[0] !== null && id_quizzes_usuario[0] !== 0) {
       for (let j = 0; j < id_quizzes_usuario.length; j++) {
         if (dados[i].id !== id_quizzes_usuario[j]) {
           quizz = `
@@ -309,6 +306,7 @@ function finalizarQuizz() {
   let criarNiveis = document.querySelector(".criar-niveis-container");
   let verificador = 0;
   let porcentagemZero = false;
+  let arrayIds = [];
   for (i = 1; i <= qntdNiveis; i++) {
     tituloNivel = document.querySelector(`.tituloNivel${i}`).value;
     porcentagemMinima = document.querySelector(`.porcentagem${i}`).value;
@@ -352,7 +350,9 @@ function finalizarQuizz() {
     );
     requisicao.then(function (resposta) {
       console.log(resposta);
-      localStorage.setItem("identificador", `${resposta.data.id}`);
+      arrayIds.push(resposta.data.id);
+      const arrayIdsSerializados = JSON.stringify(arrayIds);
+      localStorage.setItem("ids_pessoal", `${arrayIdsSerializados}`);
     });
     requisicao.catch(function (erro) {
       alert("Erro ao criar quizz");
@@ -534,8 +534,17 @@ function reproduzirQuiz() {
 
 function VoltarPraHome() {
   pegarQuizzes();
-  document.querySelector(".pagina1").classList.remove("hidden");
-  document.querySelector(".pagina2").classList.add("hidden");
-  document.querySelector(".quizz-finalizado-container").classList.add("hidden");
+  const pagina1 = document.querySelector(".pagina1")
+  const pagina2 = document.querySelector(".pagina2")
+  const pagina3 = document.querySelector(".pagina3")
+  if (pagina1.classList.contains("hidden")) {
+    pagina1.classList.remove("hidden");
+  }
+  if (!pagina2.classList.contains("hidden")) {
+    pagina2.classList.add("hidden")
+  }
+  if (!pagina3.classList.contains("hidden")) {
+    pagina3.classList.add("hidden")
+  }
   window.scrollTo(0, 0);
 }
