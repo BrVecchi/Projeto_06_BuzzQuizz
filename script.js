@@ -185,7 +185,7 @@ function renderizarCriarPerguntas() {
     criarPerguntas.innerHTML += `<fieldset>
     <div class="pergunta-title">
       <h2>Pergunta ${i}</h2>
-      <img class ="icon-edit" onclick = "mostrarCampos(this)" src="/imgs_pg1/Icone-editar.png" alt="icone">
+      <img class ="icon-edit" onclick="mostrarCampos(this)" src="./imgs_pg1/Icone-editar.png" alt="icone">
     </div>
     <div class="form-container hidden">
       <div class="form">
