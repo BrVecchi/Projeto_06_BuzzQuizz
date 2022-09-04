@@ -634,11 +634,20 @@ button:hover {
   }
 }
 
-@media (max-width: 600px) {
-
+@media (max-width: 760px) {
   .pagina1 {
     width: 359px;
   }
+}
+
+@media (max-width: 380px) {
+  .pagina1 {
+    margin-left: 0px;
+    width: 95%;
+  }
+}
+
+@media (max-width: 600px) {
 
   .pagina3 h1 {
     margin-top: 37px;

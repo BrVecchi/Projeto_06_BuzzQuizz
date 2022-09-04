@@ -53,6 +53,7 @@ function mostrarQuizzes(resposta) {
   quizzes_pessoal.innerHTML = "";
 
   console.log(id_quizzes_usuario);
+  let existeQuizzPessoal = false;
   for (let i = 0; i < dados.length; i++) {
     if (id_quizzes_usuario[0] !== null && id_quizzes_usuario[0] !== 0) {
       for (let j = 0; j < id_quizzes_usuario.length; j++) {
@@ -67,6 +68,7 @@ function mostrarQuizzes(resposta) {
               <p class="texto-quizz">${dados[i].title}</p>
             </li>`;
           quizzes_pessoal.innerHTML = quizzes_pessoal.innerHTML + quizz_pessoal;
+          existeQuizzPessoal = true;
         }
       }
     } else {
@@ -80,6 +82,11 @@ function mostrarQuizzes(resposta) {
         linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.5) 64.58%, #000000 100%),
         url(${dados[i].image})
       `;
+  }
+
+  if (existeQuizzPessoal){
+    document.querySelector(".quizzes-pessoal-vazio").classList.add("hidden")
+    document.querySelector(".quizzes-pessoal-container").classList.remove("hidden")
   }
 }
 
