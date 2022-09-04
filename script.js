@@ -20,20 +20,23 @@ let PorcentagemMinima = "";
 let imgURL_nivel = "";
 let descricaoNivel;
 let niveis = [];
-let id_quizzes_usuario = [null];
-let id_do_quizz_selecionado;
 let quizzSelecionado;
+
+let arrayQuizzesCriados = [];
+let arrayResposta = [];
+let quizzCriado;
+if (localStorage.getItem("quizzes_pessoal") !== null) {
+  arrayResposta = JSON.parse(localStorage.getItem("quizzes_pessoal"));
+  for (let i = 0; i < arrayResposta.length; i++) {
+    arrayQuizzesCriados.push(arrayResposta[i].data);
+  }
+}
+console.log(arrayQuizzesCriados);
+console.log(arrayResposta);
 
 let quizzes = document.querySelector(".quizzes");
 let quizzes_pessoal = document.querySelector(".quizzes-pessoal");
 let dadosRecebidos;
-
-const arrayIdsSerializadosGlobal = localStorage.getItem("ids_pessoal");
-const arrayIdsDeserializados = JSON.parse(arrayIdsSerializadosGlobal);
-  
-if (arrayIdsSerializadosGlobal !== null) {
-  id_quizzes_usuario = arrayIdsDeserializados;
-}
 
 //---------------------------INICIO PAGINA 1-----------------------------------------------
 function pegarQuizzes() {
@@ -52,12 +55,11 @@ function mostrarQuizzes(resposta) {
   quizzes.innerHTML = "";
   quizzes_pessoal.innerHTML = "";
 
-  console.log(id_quizzes_usuario);
   let existeQuizzPessoal = false;
   for (let i = 0; i < dados.length; i++) {
-    if (id_quizzes_usuario[0] !== null && id_quizzes_usuario[0] !== 0) {
-      for (let j = 0; j < id_quizzes_usuario.length; j++) {
-        if (dados[i].id !== id_quizzes_usuario[j]) {
+    if (arrayQuizzesCriados[0] !== undefined) {
+      for (let j = 0; j < arrayQuizzesCriados.length; j++) {
+        if (dados[i].id !== arrayQuizzesCriados[j].id) {
           quizz = `
             <li id="quizz${dados[i].id}" class="quizz" onclick="selecionarQuizz(this)">
               <p class="texto-quizz">${dados[i].title}</p>
@@ -88,21 +90,21 @@ function mostrarQuizzes(resposta) {
       `;
   }
 
-  if (existeQuizzPessoal){
-    document.querySelector(".quizzes-pessoal-vazio").classList.add("hidden")
-    document.querySelector(".quizzes-pessoal-container").classList.remove("hidden")
+  if (existeQuizzPessoal) {
+    document.querySelector(".quizzes-pessoal-vazio").classList.add("hidden");
+    document
+      .querySelector(".quizzes-pessoal-container")
+      .classList.remove("hidden");
   }
 }
-
+let id_quizz_selecionado = 0;
 function selecionarQuizz(quizz) {
-  const identificador = quizz.id.replace(/[^0-9]/g, "");
-  console.log(dadosRecebidos[0].id);
+  id_quizz_selecionado = quizz.id.replace(/[^0-9]/g, "");
   for (let i = 0; i < dadosRecebidos.length; i++) {
-    if (identificador == dadosRecebidos[i].id) {
+    if (id_quizz_selecionado == dadosRecebidos[i].id) {
       quizzSelecionado = dadosRecebidos[i];
     }
   }
-  console.log(quizzSelecionado);
   renderizarQuizz(quizzSelecionado);
   document.querySelector(".pagina1").classList.add("hidden");
   document.querySelector(".pagina2").classList.remove("hidden");
@@ -115,6 +117,43 @@ function criarQuizz() {
   document.querySelector(".pagina3").classList.remove("hidden");
 }
 
+
+function deletarQuizz(botao_deletar) {
+  let identificador = Number(botao_deletar.id.replace(/[^0-9]/g, ""));
+  let header;
+  let posicao_array;
+  if (arrayResposta.length === 1) {
+    header = arrayResposta[0].data.key;
+  } else if (arrayResposta.length > 1) {
+    for (let i = 0; arrayResposta.length; i++) {
+      if ((arrayResposta[i].data.id = identificador)) {
+        header = arrayResposta[i].data.key;
+        posicao_array = i;
+      }
+    }
+  }
+  axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${identificador}`, { headers: { "Secret-Key": `${header}` } }).then(
+    function () {
+      arrayResposta = JSON.parse(localStorage.getItem("quizzes_pessoal"));
+      if (arrayResposta.length === 1) {
+        localStorage.clear();
+      } else if (arrayResposta.length > 1) {
+        for (let i = 0; arrayResposta.length; i++) {
+          if ((arrayResposta[i].data.id = identificador)) {
+            arrayResposta = arrayResposta.filter((element) => {
+              return element !== arrayResposta[i]
+            }) 
+          }
+        }
+      }
+      for (let i = 0; i < arrayResposta.length; i++) {
+      arrayQuizzesCriados.push(arrayResposta[i].data);
+  }
+    }
+  )
+
+}
+
 //---------------------------INICIO PAGINA 3-----------------------------------------------
 function addInfo() {
   let basicInfo = document.querySelector(".basic-info-container");
@@ -125,7 +164,13 @@ function addInfo() {
   qntdNiveis = document.querySelector(".qntd-niveis").value;
   const reg =
     /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-  if (titulo.length < 20 || titulo.length > 65 || reg.test(imgURL) === false || qntdPerguntas < 3 || qntdNiveis < 2) {
+  if (
+    titulo.length < 20 ||
+    titulo.length > 65 ||
+    reg.test(imgURL) === false ||
+    qntdPerguntas < 3 ||
+    qntdNiveis < 2
+  ) {
     alert("Preencha os dados corretamente!");
   } else {
     renderizarCriarPerguntas();
@@ -199,10 +244,19 @@ function guardarPerguntas() {
     img3 = document.querySelector(`.resposta${i}-img3`).value;
     resposta4 = document.querySelector(`.incorreta3-pergunta${i}`).value;
     img4 = document.querySelector(`.resposta${i}-img4`).value;
-    const regURL = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+    const regURL =
+      /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
     const regCor = /^#[0-9A-F]{6}$/i;
-    if (tituloPergunta.length < 20 || regCor.test(cor) === false  || resposta1 === "" || resposta2 === "" || regURL.test(img1) === false ||
-      regURL.test(img2) === false || (regURL.test(img3) === false && img3 !== "") || (regURL.test(img4) === false && img4 !== "")) {
+    if (
+      tituloPergunta.length < 20 ||
+      regCor.test(cor) === false ||
+      resposta1 === "" ||
+      resposta2 === "" ||
+      regURL.test(img1) === false ||
+      regURL.test(img2) === false ||
+      (regURL.test(img3) === false && img3 !== "") ||
+      (regURL.test(img4) === false && img4 !== "")
+    ) {
       verificador++;
     }
     if (tituloPergunta.length > 10000) {
@@ -311,21 +365,18 @@ function renderizarCriarNiveis() {
     '<button onclick="finalizarQuizz()">Finalizar Quizz</button>';
 }
 
-let arrayIds = [];
-let quizzCriado;
-
 function finalizarQuizz() {
   let quizzFinalizado = document.querySelector(".quizz-finalizado-container");
   let criarNiveis = document.querySelector(".criar-niveis-container");
   let verificador = 0;
   let porcentagemZero = false;
-  arrayIds = id_quizzes_usuario;
   for (i = 1; i <= qntdNiveis; i++) {
     tituloNivel = document.querySelector(`.tituloNivel${i}`).value;
     porcentagemMinima = document.querySelector(`.porcentagem${i}`).value;
     imgURL_nivel = document.querySelector(`.url${i}`).value;
     descricaoNivel = document.querySelector(`.descricao${i}`).value;
-    const reg = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+    const reg =
+      /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
     if (porcentagemMinima == 0) {
       porcentagemZero = true;
     }
@@ -362,11 +413,10 @@ function finalizarQuizz() {
       quiz
     );
     requisicao.then(function (resposta) {
-      console.log(resposta);
-      quizzCriado = resposta.data;
-      arrayIds.push(resposta.data.id);
-      const arrayIdsSerializados = JSON.stringify(arrayIds);
-      localStorage.setItem("ids_pessoal", `${arrayIdsSerializados}`);
+      quizzCriado = resposta;
+      arrayResposta.push(quizzCriado);
+      const arrayRespostaSerializado = JSON.stringify(arrayResposta);
+      localStorage.setItem("quizzes_pessoal", `${arrayRespostaSerializado}`);
     });
     requisicao.catch(function (erro) {
       alert("Erro ao criar quizz");
@@ -447,7 +497,6 @@ function renderizarQuizz(quizz) {
     body += `</div>  </div>`;
   }
   for (const levels of quizz.levels) {
-    console.log(levels);
     body += `
     <div id="${levels.minValue}" class="QuizFinalizado hidden">
       <div class="porcentagemDeAcerto"><span class="textoFinal"></span><p class="tituloFinalQuiz"> ${levels.title}</p></div>
@@ -548,24 +597,23 @@ function finalizandoQuiz() {
 }
 
 function reproduzirQuiz() {
-  console.log(quizzSelecionado);
   renderizarQuizz(quizzSelecionado);
   window.scrollTo(0, 0);
 }
 
 function VoltarPraHome() {
   pegarQuizzes();
-  const pagina1 = document.querySelector(".pagina1")
-  const pagina2 = document.querySelector(".pagina2")
-  const pagina3 = document.querySelector(".pagina3")
+  const pagina1 = document.querySelector(".pagina1");
+  const pagina2 = document.querySelector(".pagina2");
+  const pagina3 = document.querySelector(".pagina3");
   if (pagina1.classList.contains("hidden")) {
     pagina1.classList.remove("hidden");
   }
   if (!pagina2.classList.contains("hidden")) {
-    pagina2.classList.add("hidden")
+    pagina2.classList.add("hidden");
   }
   if (!pagina3.classList.contains("hidden")) {
-    pagina3.classList.add("hidden")
+    pagina3.classList.add("hidden");
   }
   window.scrollTo(0, 0);
 }
