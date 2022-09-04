@@ -64,7 +64,11 @@ function mostrarQuizzes(resposta) {
             </li>`;
         } else {
           quizz_pessoal = `
-            <li id="quizz${dados[i].id}" class="quizz" onclick="selecionarQuizz(this)">
+            <li id="quizz${dados[i].id}" class="quizz-pessoal" onclick="selecionarQuizz(this)">
+              <div class="deletar-editar">
+                <button class="botao-editar"><ion-icon name="create-outline"></ion-icon></button>
+                <button id="deletar${dados[i].id}" class="botao-deletar" onclick="deletarQuizz(this)"><ion-icon name="trash-outline"></button>
+              </div>
               <p class="texto-quizz">${dados[i].title}</p>
             </li>`;
           quizzes_pessoal.innerHTML = quizzes_pessoal.innerHTML + quizz_pessoal;
@@ -112,7 +116,6 @@ function criarQuizz() {
 }
 
 //---------------------------INICIO PAGINA 3-----------------------------------------------
-
 function addInfo() {
   let basicInfo = document.querySelector(".basic-info-container");
   let criarPerguntas = document.querySelector(".criar-perguntas-container");
