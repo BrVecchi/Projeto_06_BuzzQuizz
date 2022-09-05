@@ -31,8 +31,6 @@ if (localStorage.getItem("quizzes_pessoal") !== null) {
     arrayQuizzesCriados.push(arrayResposta[i].data);
   }
 }
-console.log(arrayQuizzesCriados);
-console.log(arrayResposta);
 
 let quizzes = document.querySelector(".quizzes");
 let quizzes_pessoal = document.querySelector(".quizzes-pessoal");
@@ -70,7 +68,6 @@ function filtrarStore(resposta) {
       }
     }
     arrayResposta = arrayFiltrados;
-    console.log(arrayResposta);
     const arrayRespostaSerializado = JSON.stringify(arrayResposta);
     localStorage.setItem("quizzes_pessoal", `${arrayRespostaSerializado}`);
     arrayQuizzesCriados = [];
@@ -81,8 +78,6 @@ function filtrarStore(resposta) {
       }
     }
   }
-  console.log(arrayQuizzesCriados);
-  console.log(arrayResposta);
 }
 
 function mostrarQuizzes(resposta) {
