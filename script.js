@@ -508,7 +508,7 @@ function renderizarCriarNiveis() {
         <input class="url${i}" type="text" placeholder="URL da imagem do nível">
         <p class="url${i}-alerta hidden">O valor informado não é uma URL válida</p>
         <textarea name="" class="nivel-descricao descricao${i}" placeholder="Descrição do nível (mínimo: 30 caracteres)"></textarea>
-        <p class="descricao1-alerta hidden">A descrição deve ter no mínimo 30 caracteres</p>
+        <p class="descricao${i}-alerta hidden">A descrição deve ter no mínimo 30 caracteres</p>
     </div>
     </div>
 </fieldset>`;
@@ -517,72 +517,113 @@ function renderizarCriarNiveis() {
     '<button onclick="finalizarQuizz()">Finalizar Quizz</button>';
 }
 
-function finalizarQuizz() {
-  
-  let quizzFinalizado = document.querySelector(".quizz-finalizado-container");
-  let criarNiveis = document.querySelector(".criar-niveis-container");
-  let verificador = 0;
-  let porcentagemZero = false;
-  for (i = 1; i <= qntdNiveis.value; i++) {
-    tituloNivel = document.querySelector(`.tituloNivel${i}`).value;
-    porcentagemMinima = document.querySelector(`.porcentagem${i}`).value;
-    imgURL_nivel = document.querySelector(`.url${i}`).value;
-    descricaoNivel = document.querySelector(`.descricao${i}`).value;
-    const reg =
-      /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-    if (porcentagemMinima == 0) {
-      porcentagemZero = true;
-    }
-    if (
-      tituloNivel.length < 10 ||
-      porcentagemMinima > 100 ||
-      reg.test(imgURL_nivel) === false ||
-      descricaoNivel.length < 30
-    ) {
-      verificador++;
-    } else {
-      objLevels = {
-        title: `${tituloNivel}`,
-        image: `${imgURL_nivel}`,
-        text: `${descricaoNivel}`,
-        minValue: `${porcentagemMinima}`,
-      };
-    }
-    niveis.push(objLevels);
-  }
-  if (verificador !== 0 || porcentagemZero === false) {
-    niveis.length = 0;
-    alert("Preencha os dados corretamente");
-  } else {
-    document.querySelector(".pagina3").classList.add("hidden");
-    carregar();
-    let quiz = {
-      title: `${titulo}`,
-      image: `${imgURL}`,
-      questions: perguntas,
-      levels: niveis,
-    };
-    renderizarPaginaFinal();
-    const requisicao = axios.post(
-      "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes",
-      quiz
-    );
-    requisicao.then(function (resposta) {
-      quizzCriado = resposta;
-      arrayResposta.push(quizzCriado);
-      const arrayRespostaSerializado = JSON.stringify(arrayResposta);
-      localStorage.setItem("quizzes_pessoal", `${arrayRespostaSerializado}`);
-      document.querySelector(".pagina-loading").classList.add("hidden");
-      document.querySelector(".pagina3").classList.remove("hidden");
-    });
-    requisicao.catch(function (erro) {
-      alert("Erro ao criar quizz");
-    });
-    criarNiveis.classList.add("hidden");
-    quizzFinalizado.classList.remove("hidden");
-    window.scrollTo(0, 0);
-  }
-}
+// function finalizarQuizz() {
+//   document.querySelector(".pagina3").classList.add("hidden");
+//   carregar();
+//   let quizzFinalizado = document.querySelector(".quizz-finalizado-container");
+//   let criarNiveis = document.querySelector(".criar-niveis-container");
+//   let porcentagemMinima_alert = document.querySelector(`.porcentagem1-alerta`);
+//   let verificador = 0;
+//   let invalidos;
+//   let porcentagemZero = false;
+//   for (i = 1; i <= qntdNiveis.value; i++) {
+//     tituloNivel = document.querySelector(`.tituloNivel${i}`);
+//     let tituloNivel_alert = document.querySelector(`.tituloNivel${i}-alerta`);
+//     porcentagemMinima = document.querySelector(`.porcentagem${i}`);
+//     imgURL_nivel = document.querySelector(`.url${i}`);
+//     let imgURL_nivel_alert = document.querySelector(`.url${i}-alerta`);
+//     descricaoNivel = document.querySelector(`.descricao${i}`);
+//     let descricaoNivel_alert = document.querySelector(`.descricao${i}-alerta`);
+//     invalidos = 0;
+//     const reg =
+//       /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+//     if (porcentagemMinima.value == 0) {
+//       porcentagemZero = true;
+//     }
+
+//     if(tituloNivel.value.length < 10) {
+//       tituloNivel.classList.add("invalido");
+//       tituloNivel_alert.classList.remove("hidden");
+//       verificador++;
+//       invalidos++;
+//     } else {
+//       tituloNivel.classList.remove("invalido");
+//       tituloNivel_alert.classList.add("hidden");
+//     }
+//     if(porcentagemMinima.value > 100) {
+//       porcentagemMinima.classList.add("invalido");
+//       porcentagemMinima_alert.classList.remove("hidden");
+//       verificador++;
+//       invalidos++;
+//     } else {
+//       porcentagemMinima.classList.remove("invalido");
+//       porcentagemMinima_alert.classList.add("hidden");
+//     }
+//     if(reg.test(imgURL_nivel.value) === false) {
+//       imgURL_nivel.classList.add("invalido");
+//       imgURL_nivel_alert.classList.remove("hidden");
+//       verificador++;
+//       invalidos++;
+//     } else {
+//       imgURL_nivel.classList.remove("invalido");
+//       imgURL_nivel_alert.classList.add("hidden");
+//     }
+//     if(descricaoNivel.value.length < 30) {
+//       descricaoNivel.classList.add("invalido");
+//       descricaoNivel_alert.classList.remove("hidden");
+//       verificador++;
+//       invalidos++;
+//     } else {
+//       descricaoNivel.classList.remove("invalido");
+//       descricaoNivel_alert.classList.add("hidden");
+//     }
+//     if(invalidos === 0) {
+//       objLevels = {
+//             title: `${tituloNivel.value}`,
+//             image: `${imgURL_nivel.value}`,
+//             text: `${descricaoNivel.value}`,
+//             minValue: `${porcentagemMinima.value}`,
+//     }
+//     niveis.push(objLevels);
+//   }
+
+//   }
+//   if(porcentagemZero === false) {
+//     document.querySelector(`.porcentagem1`).classList.add("invalido");
+//     porcentagemMinima_alert.classList.remove("hidden");
+//     niveis.length = 0;
+//     verificador++;
+//   }
+//   if (verificador === 0) {
+//     document.querySelector(".pagina3").classList.add("hidden");
+//     carregar();
+//     let quiz = {
+//       title: `${titulo}`,
+//       image: `${imgURL}`,
+//       questions: perguntas,
+//       levels: niveis,
+//     };
+//     renderizarPaginaFinal();
+//     const requisicao = axios.post(
+//       "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes",
+//       quiz
+//     );
+//     requisicao.then(function (resposta) {
+//       quizzCriado = resposta;
+//       arrayResposta.push(quizzCriado);
+//       const arrayRespostaSerializado = JSON.stringify(arrayResposta);
+//       localStorage.setItem("quizzes_pessoal", `${arrayRespostaSerializado}`);
+//       document.querySelector(".pagina-loading").classList.add("hidden");
+//       document.querySelector(".pagina3").classList.remove("hidden");
+//     });
+//     requisicao.catch(function (erro) {
+//       alert("Erro ao criar quizz");
+//     });
+//     criarNiveis.classList.add("hidden");
+//     quizzFinalizado.classList.remove("hidden");
+//     window.scrollTo(0, 0);
+//   }
+// }
 
 function renderizarPaginaFinal() {
   let quizzFinalizado = document.querySelector(".quizz-finalizado-container");
