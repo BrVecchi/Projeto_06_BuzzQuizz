@@ -39,22 +39,60 @@ let quizzes_pessoal = document.querySelector(".quizzes-pessoal");
 let dadosRecebidos;
 
 //---------------------------INICIO PAGINA 1-----------------------------------------------
+carregar();
+pegarQuizzes();
+
+function carregar() {
+  document.querySelector(".pagina-loading").classList.remove("hidden");
+}
+
 function pegarQuizzes() {
   const promessa = axios.get(
     "https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes"
   );
   promessa.then(mostrarQuizzes);
+  promessa.then(() => {
+    document.querySelector(".pagina-loading").classList.add("hidden");
+    document.querySelector(".pagina1").classList.remove("hidden");
+  });
+  promessa.then(filtrarStore);
 }
-pegarQuizzes();
+
+function filtrarStore(resposta) {
+  const dados = resposta.data;
+  let arrayFiltrados = [];
+  if (arrayResposta[0] !== undefined) {
+    for (let i = 0; i < dados.length; i++) {
+      for (let j = 0; j < arrayResposta.length; j++) {
+        if (dados[i].id === arrayResposta[j].data.id) {
+          arrayFiltrados.push(arrayResposta[j]);
+        }
+      }
+    }
+    arrayResposta = arrayFiltrados;
+    console.log(arrayResposta);
+    const arrayRespostaSerializado = JSON.stringify(arrayResposta);
+    localStorage.setItem("quizzes_pessoal", `${arrayRespostaSerializado}`);
+    arrayQuizzesCriados = [];
+    if (localStorage.getItem("quizzes_pessoal") !== null) {
+      arrayResposta = JSON.parse(localStorage.getItem("quizzes_pessoal"));
+      for (let i = 0; i < arrayResposta.length; i++) {
+        arrayQuizzesCriados.push(arrayResposta[i].data);
+      }
+    }
+  }
+  console.log(arrayQuizzesCriados);
+  console.log(arrayResposta);
+}
 
 function mostrarQuizzes(resposta) {
+  document.querySelector(".pagina1").classList.add("hidden");
   let quizz = "";
   let quizz_pessoal = "";
   const dados = resposta.data;
   dadosRecebidos = dados;
   quizzes.innerHTML = "";
   quizzes_pessoal.innerHTML = "";
-
   let existeQuizzPessoal = false;
   for (let i = 0; i < dados.length; i++) {
     if (arrayQuizzesCriados[0] !== undefined) {
@@ -117,43 +155,38 @@ function criarQuizz() {
   document.querySelector(".pagina3").classList.remove("hidden");
 }
 
-
 function deletarQuizz(botao_deletar) {
+  document.querySelector(".pagina1").classList.add("hidden");
+  carregar();
   let identificador = Number(botao_deletar.id.replace(/[^0-9]/g, ""));
   let header;
   let posicao_array;
-  if (arrayResposta.length === 1) {
-    header = arrayResposta[0].data.key;
-  } else if (arrayResposta.length > 1) {
-    for (let i = 0; arrayResposta.length; i++) {
-      if ((arrayResposta[i].data.id = identificador)) {
-        header = arrayResposta[i].data.key;
-        posicao_array = i;
-      }
+  for (let i = 0; i < arrayResposta.length; i++) {
+    if ((arrayResposta[i].data.id = identificador)) {
+      header = arrayResposta[i].data.key;
+      posicao_array = i;
     }
   }
-  axios.delete(`https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${identificador}`, { headers: { "Secret-Key": `${header}` } }).then(
-    function () {
+  axios
+    .delete(
+      `https://mock-api.driven.com.br/api/v4/buzzquizz/quizzes/${identificador}`,
+      { headers: { "Secret-Key": `${header}` } }
+    )
+    .then(function () {
       arrayResposta = JSON.parse(localStorage.getItem("quizzes_pessoal"));
-      if (arrayResposta.length === 1) {
-        localStorage.clear();
-      } else if (arrayResposta.length > 1) {
-        for (let i = 0; arrayResposta.length; i++) {
-          if ((arrayResposta[i].data.id = identificador)) {
-            arrayResposta = arrayResposta.filter((element) => {
-              return element !== arrayResposta[i]
-            }) 
-          }
+      for (let i = 0; i < arrayResposta.length; i++) {
+        if ((arrayResposta[i].data.id = identificador)) {
+          arrayResposta = arrayResposta.filter((element) => {
+            return element !== arrayResposta[i];
+          });
         }
       }
       for (let i = 0; i < arrayResposta.length; i++) {
-      arrayQuizzesCriados.push(arrayResposta[i].data);
-  }
-    }
-  )
-
+        arrayQuizzesCriados.push(arrayResposta[i].data);
+      }
+      window.location.reload();
+    });
 }
-
 //---------------------------INICIO PAGINA 3-----------------------------------------------
 function addInfo() {
   let basicInfo = document.querySelector(".basic-info-container");
@@ -349,7 +382,7 @@ function renderizarCriarNiveis() {
     criarNiveis.innerHTML += `<fieldset>
     <div class="nivel-title">
     <h2>Nível ${i}</h2>
-    <img class ="icon-edit" onclick = "mostrarCampos(this)" src="/imgs_pg1/Icone-editar.png" alt="icone">
+    <img class ="icon-edit" onclick = "mostrarCampos(this)" src="./imgs_pg1/Icone-editar.png" alt="icone">
     </div>
     <div class="form-container hidden">
     <div class="niveis-form">
@@ -366,6 +399,8 @@ function renderizarCriarNiveis() {
 }
 
 function finalizarQuizz() {
+  document.querySelector(".pagina3").classList.add("hidden");
+  carregar();
   let quizzFinalizado = document.querySelector(".quizz-finalizado-container");
   let criarNiveis = document.querySelector(".criar-niveis-container");
   let verificador = 0;
@@ -417,6 +452,8 @@ function finalizarQuizz() {
       arrayResposta.push(quizzCriado);
       const arrayRespostaSerializado = JSON.stringify(arrayResposta);
       localStorage.setItem("quizzes_pessoal", `${arrayRespostaSerializado}`);
+      document.querySelector(".pagina-loading").classList.add("hidden");
+      document.querySelector(".pagina3").classList.remove("hidden");
     });
     requisicao.catch(function (erro) {
       alert("Erro ao criar quizz");
@@ -554,7 +591,7 @@ function respostaSelecionada(respostaEscolhida) {
   } else {
     elementoQueQueroQueApareca &&
       setTimeout(() => {
-        elementoQueQueroQueApareca.scrollIntoView();
+        elementoQueQueroQueApareca.scrollIntoView({Block :  "center"});
       }, 2000);
   }
 }
