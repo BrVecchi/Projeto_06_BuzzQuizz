@@ -485,7 +485,7 @@ body {
 
 .basic-info fieldset {
   width: 600px;
-  height: 259px;
+  height: auto;
   display: flex;
   flex-direction: column;
   gap: 9px;
@@ -534,7 +534,7 @@ button:hover {
 }
 
 .basic-info button {
-  margin-top: 65px;
+  margin-top: 50px;
 }
 
 .criar-perguntas {
