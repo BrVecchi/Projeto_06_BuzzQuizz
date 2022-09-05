@@ -116,22 +116,61 @@ function criarQuizz() {
 }
 
 //---------------------------INICIO PAGINA 3-----------------------------------------------
+
+
 function addInfo() {
   let basicInfo = document.querySelector(".basic-info-container");
   let criarPerguntas = document.querySelector(".criar-perguntas-container");
-  titulo = document.querySelector(".titulo").value;
-  imgURL = document.querySelector(".img-url").value;
-  qntdPerguntas = document.querySelector(".qntd-perguntas").value;
-  qntdNiveis = document.querySelector(".qntd-niveis").value;
+  titulo = document.querySelector(".titulo");
+  let titulo_alert = document.querySelector(".titulo-alerta");
+  imgURL = document.querySelector(".img-url");
+  let imgURL_alert = document.querySelector(".img-url-alerta");
+  qntdPerguntas = document.querySelector(".qntd-perguntas");
+  let qntdPerguntas_alert = document.querySelector(".qntd-perguntas-alerta");
+  qntdNiveis = document.querySelector(".qntd-niveis");
+  let qntdNiveis_alert = document.querySelector(".qntd-niveis-alerta");
+  let validos = 0;
   const reg =
     /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-  if (titulo.length < 20 || titulo.length > 65 || reg.test(imgURL) === false || qntdPerguntas < 3 || qntdNiveis < 2) {
-    alert("Preencha os dados corretamente!");
+
+  if (titulo.value.length < 20 || titulo.value.length > 65) {
+    titulo.classList.add("invalido");
+    titulo_alert.classList.remove("hidden");
   } else {
-    renderizarCriarPerguntas();
-    basicInfo.classList.add("hidden");
-    criarPerguntas.classList.remove("hidden");
+    titulo.classList.remove("invalido");
+    titulo_alert.classList.add("hidden");
+    validos++;
   }
+  
+  if(reg.test(imgURL.value) === false) {
+    imgURL.classList.add("invalido");
+    imgURL_alert.classList.remove("hidden");
+  } else {
+    imgURL.classList.remove("invalido");
+    imgURL_alert.classList.add("hidden");
+    validos++;
+  }
+  if(qntdPerguntas.value < 3) {
+    qntdPerguntas.classList.add("invalido");
+    qntdPerguntas_alert.classList.remove("hidden");
+  } else {
+    qntdPerguntas.classList.remove("invalido");
+    qntdPerguntas_alert.classList.add("hidden");
+    validos++;
+  } if (qntdNiveis.value < 2) {
+    qntdNiveis.classList.add("invalido");
+    qntdNiveis_alert.classList.remove("hidden");
+  } else {
+    qntdNiveis.classList.remove("invalido");
+    qntdNiveis_alert.classList.add("hidden");
+    validos++;
+  }
+  
+   if(validos === 4) {
+        renderizarCriarPerguntas();
+       basicInfo.classList.add("hidden");
+       criarPerguntas.classList.remove("hidden");
+   }
 }
 
 function renderizarCriarPerguntas() {
@@ -146,12 +185,15 @@ function renderizarCriarPerguntas() {
       <div class="form">
         <div class="campo-pergunta">
           <input class="tituloPergunta${i}" type="text" placeholder="Texto da pergunta (mínimo: 20 caracteres)">
+          <p class = "tituloPergunta${i}-alerta hidden">O texto da pergunta deve ter no mínimo 20 caracteres</p>
           <input class="cor${i}" type="text" placeholder="Cor de fundo da pergunta (formato: #123456)">
+          <p class = "cor${i}-alerta hidden">A cor precisa ser um hexadecimal no formato: #123456</p>
         </div>
         <div class="campo-correta">
           <h2>Resposta correta</h2>
           <input class="correta${i}" type="text" placeholder="Resposta correta">
           <input class = "resposta${i}-img1" type="text" placeholder="URL da imagem">
+          <p class = "resposta${i}-img1-alerta hidden">O valor informado não é uma URL válida</p>
         </div>
         <div class="campo-incorretas">
           <h2>Respostas incorretas</h2>
@@ -159,14 +201,17 @@ function renderizarCriarPerguntas() {
             <div class="incorreta1">
               <input class="incorreta1-pergunta${i}" type="text" placeholder="Resposta incorreta 1">
               <input class = "resposta${i}-img2" type="text" placeholder="URL da imagem 1">
+              <p class = "resposta${i}-img2-alerta hidden">O valor informado não é uma URL válida</p>
             </div>
             <div class="incorreta2">
               <input class="incorreta2-pergunta${i}" type="text" placeholder="Resposta incorreta 2">
               <input class = "resposta${i}-img3" type="text" placeholder="URL da imagem 2">
+              <p class = "resposta${i}-img3-alerta hidden">O valor informado não é uma URL válida</p>
             </div>
             <div class="incorreta3">
               <input class="incorreta3-pergunta${i}" type="text" placeholder="Resposta incorreta 3">
               <input class = "resposta${i}-img4" type="text" placeholder="URL da imagem 3">
+              <p class = "resposta${i}-img4-alerta hidden">O valor informado não é uma URL válida</p>
             </div>
           </div>
         </div>
@@ -187,106 +232,132 @@ function mostrarCampos(div) {
 function guardarPerguntas() {
   let criarPerguntas = document.querySelector(".criar-perguntas-container");
   let criarNiveis = document.querySelector(".criar-niveis-container");
+  let tituloPergunta_alert;
+  let cor_alert;
+  let img1_alert;
+  let img2_alert;
+  let img3_alert;
+  let img4_alert;
   let verificador = 0;
+  let validos = 0;
   for (i = 1; i <= qntdPerguntas; i++) {
-    tituloPergunta = document.querySelector(`.tituloPergunta${i}`).value;
+    tituloPergunta = document.querySelector(`.tituloPergunta${i}`);
+    tituloPergunta_alert = document.querySelector(`.tituloPergunta${i}-alerta`)
     cor = document.querySelector(`.cor${i}`).value;
+    cor_alert = document.querySelector(`.cor${i}-alerta`);
     resposta1 = document.querySelector(`.correta${i}`).value;
     img1 = document.querySelector(`.resposta${i}-img1`).value;
+    img1_alert = document.querySelector(`.resposta${i}-img1-alerta`);
     resposta2 = document.querySelector(`.incorreta1-pergunta${i}`).value;
     img2 = document.querySelector(`.resposta${i}-img2`).value;
+    img2_alert = document.querySelector(`.resposta${i}-img2-alerta`);
     resposta3 = document.querySelector(`.incorreta2-pergunta${i}`).value;
     img3 = document.querySelector(`.resposta${i}-img3`).value;
+    img3_alert = document.querySelector(`.resposta${i}-img3-alerta`);
     resposta4 = document.querySelector(`.incorreta3-pergunta${i}`).value;
     img4 = document.querySelector(`.resposta${i}-img4`).value;
+    img4_alert = document.querySelector(`.resposta${i}-img4-alerta`);
     const regURL = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
     const regCor = /^#[0-9A-F]{6}$/i;
-    if (tituloPergunta.length < 20 || regCor.test(cor) === false  || resposta1 === "" || resposta2 === "" || regURL.test(img1) === false ||
-      regURL.test(img2) === false || (regURL.test(img3) === false && img3 !== "") || (regURL.test(img4) === false && img4 !== "")) {
-      verificador++;
-    }
-    if (tituloPergunta.length > 10000) {
-      verificador++;
+
+    if(tituloPergunta.value.length < 20) {
+      tituloPergunta.classList.add("invalido");
+      tituloPergunta_alert.classList.remove("hidden");
     } else {
-      if (resposta3 === "" && resposta4 === "") {
-        objQuestions = {
-          title: `${tituloPergunta}`,
-          color: `${cor}`,
-          answers: [
-            {
-              text: `${resposta1}`,
-              image: `${img1}`,
-              isCorrectAnswer: true,
-            },
-            {
-              text: `${resposta2}`,
-              image: `${img2}`,
-              isCorrectAnswer: false,
-            },
-          ],
-        };
-      } else if (resposta4 === "") {
-        objQuestions = {
-          title: `${tituloPergunta}`,
-          color: `${cor}`,
-          answers: [
-            {
-              text: `${resposta1}`,
-              image: `${img1}`,
-              isCorrectAnswer: true,
-            },
-            {
-              text: `${resposta2}`,
-              image: `${img2}`,
-              isCorrectAnswer: false,
-            },
-            {
-              text: `${resposta3}`,
-              image: `${img3}`,
-              isCorrectAnswer: false,
-            },
-          ],
-        };
-      } else {
-        objQuestions = {
-          title: `${tituloPergunta}`,
-          color: `${cor}`,
-          answers: [
-            {
-              text: `${resposta1}`,
-              image: `${img1}`,
-              isCorrectAnswer: true,
-            },
-            {
-              text: `${resposta2}`,
-              image: `${img2}`,
-              isCorrectAnswer: false,
-            },
-            {
-              text: `${resposta3}`,
-              image: `${img3}`,
-              isCorrectAnswer: false,
-            },
-            {
-              text: `${resposta4}`,
-              image: `${img4}`,
-              isCorrectAnswer: false,
-            },
-          ],
-        };
-      }
-    }
-    perguntas.push(objQuestions);
-  }
-  if (verificador !== 0) {
-    perguntas.length = 0;
-    alert("Preencha os dados corretamente");
-  } else {
-    renderizarCriarNiveis();
-    criarPerguntas.classList.add("hidden");
-    criarNiveis.classList.remove("hidden");
-    window.scrollTo(0, 0);
-  }
+      tituloPergunta.classList.remove("invalido");
+      tituloPergunta_alert.classList.add("hidden");
+      validos++;
+    } if(regCor.test(cor.value) === false) {
+      cor.classList.add("invalido");
+      cor_alert.classList.remove("hidden");
+    } else {
+      cor.classList.remove("invalido");
+      cor_alert.classList.add("hidden");
+      validos++;
+    } 
+  //   if (tituloPergunta.length < 20 || regCor.test(cor) === false  || resposta1 === "" || resposta2 === "" || regURL.test(img1) === false ||
+  //     regURL.test(img2) === false || (regURL.test(img3) === false && img3 !== "") || (regURL.test(img4) === false && img4 !== "")) {
+  //     verificador++;
+  //   } else {
+  //     if (resposta3 === "" && resposta4 === "") {
+  //       objQuestions = {
+  //         title: `${tituloPergunta}`,
+  //         color: `${cor}`,
+  //         answers: [
+  //           {
+  //             text: `${resposta1}`,
+  //             image: `${img1}`,
+  //             isCorrectAnswer: true,
+  //           },
+  //           {
+  //             text: `${resposta2}`,
+  //             image: `${img2}`,
+  //             isCorrectAnswer: false,
+  //           },
+  //         ],
+  //       };
+  //     } else if (resposta4 === "") {
+  //       objQuestions = {
+  //         title: `${tituloPergunta}`,
+  //         color: `${cor}`,
+  //         answers: [
+  //           {
+  //             text: `${resposta1}`,
+  //             image: `${img1}`,
+  //             isCorrectAnswer: true,
+  //           },
+  //           {
+  //             text: `${resposta2}`,
+  //             image: `${img2}`,
+  //             isCorrectAnswer: false,
+  //           },
+  //           {
+  //             text: `${resposta3}`,
+  //             image: `${img3}`,
+  //             isCorrectAnswer: false,
+  //           },
+  //         ],
+  //       };
+  //     } else {
+  //       objQuestions = {
+  //         title: `${tituloPergunta}`,
+  //         color: `${cor}`,
+  //         answers: [
+  //           {
+  //             text: `${resposta1}`,
+  //             image: `${img1}`,
+  //             isCorrectAnswer: true,
+  //           },
+  //           {
+  //             text: `${resposta2}`,
+  //             image: `${img2}`,
+  //             isCorrectAnswer: false,
+  //           },
+  //           {
+  //             text: `${resposta3}`,
+  //             image: `${img3}`,
+  //             isCorrectAnswer: false,
+  //           },
+  //           {
+  //             text: `${resposta4}`,
+  //             image: `${img4}`,
+  //             isCorrectAnswer: false,
+  //           },
+  //         ],
+  //       };
+  //     }
+  //   }
+  //   perguntas.push(objQuestions);
+   }
+  // if (verificador !== 0) {
+  //   perguntas.length = 0;
+  //   alert("Preencha os dados corretamente");
+  // } else {
+  //   renderizarCriarNiveis();
+  //   criarPerguntas.classList.add("hidden");
+  //   criarNiveis.classList.remove("hidden");
+  //   window.scrollTo(0, 0);
+  // }
 }
 
 function renderizarCriarNiveis() {
@@ -569,3 +640,4 @@ function VoltarPraHome() {
   }
   window.scrollTo(0, 0);
 }
+

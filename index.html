@@ -49,10 +49,14 @@
                     <h1>Comece pelo começo</h1>
                     <fieldset>
                         <input class="titulo" type="text" placeholder="Título do seu quizz (Entre 20 e 65 caracteres)">
+                        <p class = "titulo-alerta hidden">O título deve ter entre 20 e 65 caracteres</p>
                         <input class="img-url" type="url" placeholder="URL da imagem do seu quizz">
+                        <p class = "img-url-alerta hidden">O valor informado não é uma URL válida</p>
                         <input class="qntd-perguntas" type="text"
                             placeholder="Quantidade de perguntas do quizz (mínimo: 3)">
+                            <p class = "qntd-perguntas-alerta hidden">O quizz deve ter no mínimo 3 perguntas</p>
                         <input class="qntd-niveis" type="text" placeholder="Quantidade de níveis do quizz (mínimo: 2)">
+                        <p class = "qntd-niveis-alerta hidden">O quizz deve ter no nmínimo 2 níveis</p>
                     </fieldset>
                     <button onclick="addInfo()">Prosseguir para perguntas</button>
                 </div>
@@ -67,13 +71,16 @@
                                 <div class="campo-pergunta">
                                     <input class="tituloPergunta1" type="text"
                                         placeholder="Texto da pergunta (mínimo: 20 caracteres)">
+                                    <p class = "tituloPergunta1-alerta hidden">O texto da pergunta deve ter no mínimo 20 caracteres</p>
                                     <input class="cor1" type="text"
                                         placeholder="Cor de fundo da pergunta (formato: #123456)">
+                                        <p class = "cor1-alerta hidden">A cor precisa ser um hexadecimal no formato: #123456</p>
                                 </div>
                                 <div class="campo-correta">
                                     <h2>Resposta correta</h2>
                                     <input class="correta1" type="text" placeholder="Resposta correta">
                                     <input class="resposta1-img1" type="text" placeholder="URL da imagem">
+                                    <p class = "resposta1-img1-alerta hidden">O valor informado não é uma URL válida</p>
                                 </div>
                                 <div class="campo-incorretas">
                                     <h2>Respostas incorretas</h2>
@@ -82,16 +89,19 @@
                                             <input class="incorreta1-pergunta1" type="text"
                                                 placeholder="Resposta incorreta 1">
                                             <input class="resposta1-img2" type="text" placeholder="URL da imagem 1">
+                                            <p class = "resposta1-img2-alerta hidden">O valor informado não é uma URL válida</p>
                                         </div>
                                         <div class="incorreta2">
                                             <input class="incorreta2-pergunta1" type="text"
                                                 placeholder="Resposta incorreta 2">
                                             <input class="resposta1-img3" type="text" placeholder="URL da imagem 2">
+                                            <p class = "resposta1-img3-alerta hidden">O valor informado não é uma URL válida</p>
                                         </div>
                                         <div class="incorreta3">
                                             <input class="incorreta3-pergunta1" type="text"
                                                 placeholder="Resposta incorreta 3">
                                             <input class="resposta1-img4" type="text" placeholder="URL da imagem 3">
+                                            <p class = "resposta1-img4-alerta hidden">O valor informado não é uma URL válida</p>
                                         </div>
                                     </div>
                                 </div>
