@@ -591,7 +591,7 @@ function respostaSelecionada(respostaEscolhida) {
   } else {
     elementoQueQueroQueApareca &&
       setTimeout(() => {
-        elementoQueQueroQueApareca.scrollIntoView({Block :  "center"});
+        elementoQueQueroQueApareca.scrollIntoView({block :  "center",  inline: "center"});
       }, 2000);
   }
 }
