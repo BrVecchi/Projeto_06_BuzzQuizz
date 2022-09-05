@@ -301,6 +301,7 @@ body {
 .opacity-60 {
   opacity: 60%;
 }
+
 .QuizFinalizado {
   width: 727px;
 }
@@ -408,6 +409,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   padding: 30px;
+  padding-top: 60px;
   background-color: #ffffff;
   margin: 30px;
 }

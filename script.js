@@ -518,8 +518,7 @@ function renderizarCriarNiveis() {
 }
 
 function finalizarQuizz() {
-  document.querySelector(".pagina3").classList.add("hidden");
-  carregar();
+  
   let quizzFinalizado = document.querySelector(".quizz-finalizado-container");
   let criarNiveis = document.querySelector(".criar-niveis-container");
   let verificador = 0;
@@ -555,6 +554,8 @@ function finalizarQuizz() {
     niveis.length = 0;
     alert("Preencha os dados corretamente");
   } else {
+    document.querySelector(".pagina3").classList.add("hidden");
+    carregar();
     let quiz = {
       title: `${titulo}`,
       image: `${imgURL}`,
@@ -598,7 +599,7 @@ function renderizarPaginaFinal() {
 }
 
 function acessarQuizz() {
-  renderizarQuizz(quizzCriado);
+  renderizarQuizz(quizzCriado.data);
   document.querySelector(".pagina3").classList.add("hidden");
   document.querySelector(".pagina2").classList.remove("hidden");
 }
@@ -710,7 +711,7 @@ function respostaSelecionada(respostaEscolhida) {
   } else {
     elementoQueQueroQueApareca &&
       setTimeout(() => {
-        elementoQueQueroQueApareca.scrollIntoView({block :  "center",  inline: "center"});
+        elementoQueQueroQueApareca.scrollIntoView({block :  "center"});
       }, 2000);
   }
 }
