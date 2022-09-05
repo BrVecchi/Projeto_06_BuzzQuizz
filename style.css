@@ -40,6 +40,35 @@ body {
   margin-top: 69px;
   position: relative;
 }
+/* --------------------INÍCIO PAGINA LOADING--------------------*/
+.pagina-loading{
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.gif-loading {
+  width: 76px;
+  height: 76px;
+}
+
+.gif-loading img {
+  width: 100%;
+}
+
+.texto-loading {
+  font-size: 25px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  color:#EC362D;
+  text-align: center;
+}
+/* --------------------FIM PAGINA LOADING--------------------*/
+
+
 /* --------------------INÍCIO PAGINA 1--------------------*/
 .pagina1 {
   width: 1077px;

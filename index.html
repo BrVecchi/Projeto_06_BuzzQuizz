@@ -22,7 +22,13 @@
     </div>
 
     <div class="container">
-        <div class="pagina1">
+        <div class="pagina-loading hidden">
+            <div class="gif-loading">
+                <img src="./imgs_pg1/loading.gif" alt="gif de carregamento">
+            </div>
+            <p class="texto-loading">Carregando..</p>
+        </div>
+        <div class="pagina1 hidden">
             <div class="quizzes-pessoal-vazio">
                 <p class="texto-quizzes-pessoal-vazio">Você não criou nenhum <br> quizz ainda :(</p>
                 <button class="botao-criar-quizz" onclick="criarQuizz()">Criar Quizz</button>
@@ -48,15 +54,15 @@
                 <div class="basic-info">
                     <h1>Comece pelo começo</h1>
                     <fieldset>
-                        <input class="titulo" type="text" placeholder="Título do seu quizz (Entre 20 e 65 caracteres)">
+                        <input class="titulo" type="text" placeholder="Título do seu quizz">
                         <p class = "titulo-alerta hidden">O título deve ter entre 20 e 65 caracteres</p>
                         <input class="img-url" type="url" placeholder="URL da imagem do seu quizz">
                         <p class = "img-url-alerta hidden">O valor informado não é uma URL válida</p>
                         <input class="qntd-perguntas" type="text"
-                            placeholder="Quantidade de perguntas do quizz (mínimo: 3)">
+                            placeholder="Quantidade de perguntas do quizz">
                             <p class = "qntd-perguntas-alerta hidden">O quizz deve ter no mínimo 3 perguntas</p>
-                        <input class="qntd-niveis" type="text" placeholder="Quantidade de níveis do quizz (mínimo: 2)">
-                        <p class = "qntd-niveis-alerta hidden">O quizz deve ter no nmínimo 2 níveis</p>
+                        <input class="qntd-niveis" type="text" placeholder="Quantidade de níveis do quizz">
+                        <p class = "qntd-niveis-alerta hidden">O quizz deve ter no mínimo 2 níveis</p>
                     </fieldset>
                     <button onclick="addInfo()">Prosseguir para perguntas</button>
                 </div>
@@ -70,7 +76,7 @@
                             <div class="form">
                                 <div class="campo-pergunta">
                                     <input class="tituloPergunta1" type="text"
-                                        placeholder="Texto da pergunta (mínimo: 20 caracteres)">
+                                        placeholder="Texto da pergunta">
                                     <p class = "tituloPergunta1-alerta hidden">O texto da pergunta deve ter no mínimo 20 caracteres</p>
                                     <input class="cor1" type="text"
                                         placeholder="Cor de fundo da pergunta (formato: #123456)">
@@ -79,6 +85,7 @@
                                 <div class="campo-correta">
                                     <h2>Resposta correta</h2>
                                     <input class="correta1" type="text" placeholder="Resposta correta">
+                                    <p class="correta1-alerta hidden">Campo obrigatório</p>
                                     <input class="resposta1-img1" type="text" placeholder="URL da imagem">
                                     <p class = "resposta1-img1-alerta hidden">O valor informado não é uma URL válida</p>
                                 </div>
@@ -88,6 +95,7 @@
                                         <div class="incorreta1">
                                             <input class="incorreta1-pergunta1" type="text"
                                                 placeholder="Resposta incorreta 1">
+                                            <p class="incorreta1-pergunta1-alerta hidden">Campo obrigatório</p>
                                             <input class="resposta1-img2" type="text" placeholder="URL da imagem 1">
                                             <p class = "resposta1-img2-alerta hidden">O valor informado não é uma URL válida</p>
                                         </div>
@@ -119,10 +127,14 @@
                             <div class="niveis-form">
                                 <input class="tituloNivel1" type="text"
                                     placeholder="Título do nível (mínimo: 10 caracteres)">
+                                <p class="tituloNivel1-alerta hidden">O título do nível deve ter no mínimo 10 caracteres</p>
                                 <input class="porcentagem1" type="text" placeholder="% de acerto mínima">
+                                <p class="porcentagem1-alerta hidden">O quizz deve ter um dos níveis com porcentagem mínima de 0%</p>
                                 <input class="url1" type="text" placeholder="URL da imagem do nível">
+                                <p class="url1-alerta hidden">O valor informado não é uma URL válida</p>
                                 <textarea name="" class="nivel-descricao descricao1"
                                     placeholder="Descrição do nível"></textarea>
+                                <p class="descricao1-alerta hidden">A descrição deve ter no mínimo 30 caracteres</p>
                             </div>
                         </div>
                     </fieldset>
