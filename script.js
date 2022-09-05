@@ -711,7 +711,7 @@ function respostaSelecionada(respostaEscolhida) {
   } else {
     elementoQueQueroQueApareca &&
       setTimeout(() => {
-        elementoQueQueroQueApareca.scrollIntoView({block :  "center"});
+        elementoQueQueroQueApareca.parentElement.scrollIntoView({block :  "center"});
       }, 2000);
   }
 }
